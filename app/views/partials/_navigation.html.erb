@@ -1,0 +1,49 @@
+<%
+    signed_in = controller.get_signed_in()
+    name = controller.action_name
+    navs = [
+        {
+            url: !signed_in ? new_session_path() : nil ,
+            active: controller.on_page("users", "new", "create") ||
+                controller.on_page("sessions", "new", "create", "destroy"),
+            text: "Auth",
+            icon: "orange lock",
+            data: nil
+        },
+        {
+            url: signed_in ? root_path() : nil,
+            active: Utils.is_page(controller, "application", "index"),
+            text: "Movies",
+            icon: "orange lock",
+            data: nil
+        },
+        {
+            url: signed_in ? destroy_session_path(user_id: signed_in.id) : nil,
+            active: Utils.is_page(controller, "session", "destroy"),
+            text: "Sign Out",
+            icon: "orange lock",
+            data: {
+                turbo_method: :delete,
+                turbo_confirm: 'Are you sure you want to sign out?'
+            }
+        }
+    ]
+%>
+<div id="navigation-parent" class="four wide column">
+    <nav id="navigation" class="ui fluid vertical pointing compact menu">
+        <% for nav in navs%>
+            <%
+                url = nav[:url]
+                active = nav[:active]
+                text = nav[:text]
+                icon = nav[:icon]
+                data = nav[:data]
+                icon = "<i class='icon #{icon}'></i>"
+                body = raw("#{icon}#{text}")
+            %>
+            <% if url %>
+                <%= link_to(body, url, data: data, class: ["item", ("active" if active)].join(" ")) %>
+            <% end %>
+        <% end %>
+    </nav>
+</div>

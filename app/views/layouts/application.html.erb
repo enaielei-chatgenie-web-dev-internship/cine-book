@@ -6,15 +6,27 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
 
     <%= javascript_include_tag("https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js", "data-turbo-track": "reload") %>
     <%= stylesheet_link_tag("https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css", "data-turbo-track": "reload") %>
     <%= javascript_include_tag("https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js") %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
 
   <body>
-    <%= yield %>
+    <div id="main-content" class="ui piled text container segment">
+        <%= render("partials/header") %>
+        <div class="ui grid">
+          <%= render("partials/navigation") %>
+          <div class="ui twelve wide stretched column">
+            <div id="right-content" class="ui segment">
+              <%= yield %>
+            </div>
+          </div>
+          <%= render("partials/footer") %>
+        </div>
+    </div>
   </body>
 </html>

@@ -1,0 +1,56 @@
+<% provide(:title, "Sign Up") %>
+<%
+
+%>
+<%= render("partials/page_header", title: "Sign Up", subtitle: "New User? Setup an account in minutes!") %>
+<div class="ui divider"></div>
+<%= form_with(
+    model: @user,
+    id: "account-details-form",
+    class: "ui form",
+    url: create_user_path()
+) do |form| %>
+    <div class="field">
+        <%= form.label(:email) %>
+        <div class="ui left icon input">
+            <%= form.email_field(:email, placeholder: "juan.dela.cruz@email.com", value: nil) %>
+            <i class="at icon"></i>
+        </div>
+    </div>
+    <div class="field">
+        <%= form.label(:full_name, "Full Name") %>
+        <div class="ui left icon input">
+            <%= form.text_field(:full_name, placeholder: "Juan Dela Cruz", value: nil) %>
+            <i class="id badge icon"></i>
+        </div>
+    </div>
+    <div class="field">
+        <%= form.label(:mobile_number, "Mobile Number") %>
+        <div class="ui left icon input">
+            <%= form.text_field(:mobile_number, placeholder: "09876543211", value: nil) %>
+            <i class="id mobile icon"></i>
+        </div>
+    </div>
+    <div class="two fields">
+        <div class="field">
+            <%= form.label(:password) %>
+            <div class="ui left icon input">
+                <%= form.password_field(:password, placeholder: "@yourPassword1234") %>
+                <i class="key icon"></i>
+            </div>
+        </div>
+        <div class="field">
+            <%= form.label(:password_confirmation, "Password Confirmation") %>
+            <%= form.password_field(:password_confirmation, placeholder: "@yourPassword1234") %>
+        </div>
+    </div>
+    <div class="ui right aligned fitted basic segment">
+        <div class="ui buttons">
+            <%= link_to("Sign In", new_session_path(), class: "ui button") %>
+            <div class="or"></div>
+            <%= form.submit("Submit", class: "ui orange button") %>
+        </div>
+    </div>
+    <%= render("partials/messages", messages: flash[:messages]) %>
+    <div class="ui error message form-error-message"></div>
+<% end %>
