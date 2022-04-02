@@ -30,4 +30,10 @@ Rails.application.routes.draw do
   # Timeslots
   get("/new-timeslot", to: "timeslots#new", as: :new_timeslot)
   post("/new-timeslot", to: "timeslots#create", as: :create_timeslot)
+
+  # Showings
+  get("/new-showing", to: "showings#new", as: :new_showing)
+  post("/new-showing", to: "showings#create", as: :create_showing)
+  get("/view-showing", to: "showings#index", as: :show_showings)
+  get("/view-showing/:id", to: "showings#show", as: :show_showing)
 end

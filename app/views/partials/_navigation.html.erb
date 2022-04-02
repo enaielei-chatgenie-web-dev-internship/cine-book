@@ -40,6 +40,13 @@
             data: nil
         },
         {
+            url: signed_in && admin ? view_showings_path() : (signed_in ? show_showings_path() : nil),
+            active: Utils.is_page(controller, "showings", "new"),
+            text: "Showings",
+            icon: "orange lock",
+            data: nil
+        },
+        {
             url: signed_in ? destroy_session_path(user_id: signed_in.id) : nil,
             active: Utils.is_page(controller, "session", "destroy"),
             text: "Sign Out",

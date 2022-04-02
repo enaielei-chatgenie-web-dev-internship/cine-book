@@ -1,0 +1,57 @@
+<% provide(:title, "New Showing") %>
+<%
+
+%>
+<%= render("partials/page_header", title: "New Showing", subtitle: "Add a new showing to the database.") %>
+<div class="ui divider"></div>
+<%= form_with(
+    model: @showing,
+    id: "showing-details-form",
+    class: "ui form",
+    url: create_showing_path()
+) do |form| %>
+    <div class="field">
+        <%= form.label(:cinema_id, "Cinema") %>
+        <div class="ui selection dropdown">
+            <%= form.hidden_field(:cinema_id, placeholder: "Select a Cinema") %>
+            <i class="dropdown icon"></i>
+            <div class="default text">Cinema</div>
+            <div class="menu">
+                <% for cinema in @cinemas %>
+                    <div class="item" data-value="<%= cinema.id %>"><%= cinema.name %></div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <%= form.label(:movie_id, "Movie") %>
+        <div class="ui selection dropdown">
+            <%= form.hidden_field(:movie_id, placeholder: "Select a Movie") %>
+            <i class="dropdown icon"></i>
+            <div class="default text">Movie</div>
+            <div class="menu">
+                <% for movie in @movies %>
+                    <div class="item" data-value="<%= movie.id %>"><%= movie.title %></div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <%= form.label(:timeslot_id, "Timeslot") %>
+        <div class="ui selection dropdown">
+            <%= form.hidden_field(:timeslot_id, placeholder: "Select a Timeslot") %>
+            <i class="dropdown icon"></i>
+            <div class="default text">Timeslot</div>
+            <div class="menu">
+                <% for timeslot in @timeslots %>
+                    <div class="item" data-value="<%= timeslot.id %>"><%= timeslot.pretty_time %></div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <div class="ui right aligned fitted basic segment">
+        <%= form.submit("Submit", class: "ui orange button") %>
+    </div>
+    <%= render("partials/messages", messages: flash[:messages]) %>
+    <div class="ui error message form-error-message"></div>
+<% end %>

@@ -84,3 +84,5 @@ gem "rack-livereload", "~> 0.3.17", :group => :development
 
 # gem "better_errors", "~> 2.9", :group => :development
 # gem "binding_of_caller", "~> 1.0", :group => :development
+
+gem "kaminari", "~> 1.2"

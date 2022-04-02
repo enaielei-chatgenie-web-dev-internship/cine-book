@@ -31,7 +31,7 @@ class TimeslotsController < ApplicationController
 
   def get_params()
       return params.require(:timeslot).permit(
-          :title, :description,
+          :time, :label,
       )
   end
 end

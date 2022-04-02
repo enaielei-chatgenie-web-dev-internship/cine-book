@@ -1,0 +1,28 @@
+<% provide(:title, "Now Showing") %>
+<%
+    pagination = {
+        page: @users.current_page(),
+        pages: @users.total_pages(),
+        pages_display: 2,
+        options: {
+            count: params[:count]
+        }
+    }
+    cuser = get_user()
+%>
+<h2 class="ui header">
+    All Users
+    <div class="sub header">All the Users currently registered.</div>
+</h2>
+<div class="ui divider"></div>
+<%= render("partials/messages", messages: flash[:messages]) %>
+<% if @users.any?() %>
+    <div class="ui divided list">
+        <%= render(@users, cuser: cuser, view: true, delete: cuser.admin?() && !check_user(@user)) %>
+    </div>
+<% else %>
+    <p>There's nothing to see here.</p>
+<% end %>
+<div class="ui center aligned basic fitted segment">
+    <%= render("partials/pagination", pagination) %>
+</div>
