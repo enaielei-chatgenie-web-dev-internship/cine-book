@@ -12,7 +12,8 @@
     <%= stylesheet_link_tag("https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css", "data-turbo-track": "reload") %>
     <%= javascript_include_tag("https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js") %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag("application", "data-turbo-track": "reload") %>
+    <%= javascript_include_tag(javascript_path("main.js")) %>
   </head>
 
   <body>

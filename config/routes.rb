@@ -19,5 +19,15 @@ Rails.application.routes.draw do
   get("/auth/password-reset", to: "password_resets#new", as: :new_password_reset)
   post("/auth/password-reset", to: "password_resets#create", as: :create_password_reset)
 
-  # Pages
+  # Cinemas
+  get("/new-cinema", to: "cinemas#new", as: :new_cinema)
+  post("/new-cinema", to: "cinemas#create", as: :create_cinema)
+
+  # Movies
+  get("/new-movie", to: "movies#new", as: :new_movie)
+  post("/new-movie", to: "movies#create", as: :create_movie)
+
+  # Timeslots
+  get("/new-timeslot", to: "timeslots#new", as: :new_timeslot)
+  post("/new-timeslot", to: "timeslots#create", as: :create_timeslot)
 end

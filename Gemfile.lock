@@ -121,6 +121,9 @@ GEM
     http_parser.rb (0.8.0)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
+    importmap-rails (1.0.3)
+      actionpack (>= 6.0.0)
+      railties (>= 6.0.0)
     io-console (0.5.11)
     irb (1.4.1)
       reline (>= 0.3.0)
@@ -264,6 +267,7 @@ DEPENDENCIES
   figaro (~> 1.2)
   guard (~> 2.18)
   guard-livereload (~> 2.5)
+  importmap-rails (~> 1.0)
   jbuilder
   jsbundling-rails
   pg (~> 1.1)

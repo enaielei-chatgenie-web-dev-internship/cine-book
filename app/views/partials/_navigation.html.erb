@@ -1,5 +1,6 @@
 <%
     signed_in = controller.get_signed_in()
+    admin = signed_in && signed_in.admin?
     name = controller.action_name
     navs = [
         {
@@ -13,7 +14,28 @@
         {
             url: signed_in ? root_path() : nil,
             active: Utils.is_page(controller, "application", "index"),
+            text: "Overview",
+            icon: "orange lock",
+            data: nil
+        },
+        {
+            url: admin ? new_cinema_path() : nil,
+            active: Utils.is_page(controller, "cinemas", "new"),
+            text: "Cinemas",
+            icon: "orange lock",
+            data: nil
+        },
+        {
+            url: admin ? new_movie_path() : nil,
+            active: Utils.is_page(controller, "movies", "new"),
             text: "Movies",
+            icon: "orange lock",
+            data: nil
+        },
+        {
+            url: admin ? new_timeslot_path() : nil,
+            active: Utils.is_page(controller, "timeslots", "new"),
+            text: "Timeslots",
             icon: "orange lock",
             data: nil
         },
@@ -26,7 +48,7 @@
                 turbo_method: :delete,
                 turbo_confirm: 'Are you sure you want to sign out?'
             }
-        }
+        },
     ]
 %>
 <div id="navigation-parent" class="four wide column">

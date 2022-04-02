@@ -1,0 +1,34 @@
+<% provide(:title, "New Timeslot") %>
+<%
+
+%>
+<%= render("partials/page_header", title: "New Timeslot", subtitle: "Add a new timeslot to the database.") %>
+<div class="ui divider"></div>
+<%= form_with(
+    model: @timeslot,
+    id: "timeslot-details-form",
+    class: "ui form",
+    url: create_timeslot_path()
+) do |form| %>
+    <div class="field">
+        <%= form.label(:time) %>
+        <div class="ui calendar time">
+            <div class="ui left icon input">
+                <%= form.text_field(:time, placeholder: "7:00 PM", value: nil) %>
+                <i class="id badge icon"></i>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <%= form.label(:label) %>
+        <div class="ui left icon input">
+            <%= form.text_field(:label, placeholder: "Morning", value: nil) %>
+            <i class="id mobile icon"></i>
+        </div>
+    </div>
+    <div class="ui right aligned fitted basic segment">
+        <%= form.submit("Submit", class: "ui orange button") %>
+    </div>
+    <%= render("partials/messages", messages: flash[:messages]) %>
+    <div class="ui error message form-error-message"></div>
+<% end %>
