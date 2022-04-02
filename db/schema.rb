@@ -16,10 +16,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_02_192543) do
 
   create_table "bookings", force: :cascade do |t|
     t.bigint "showing_id", null: false
+    t.bigint "user_id"
     t.integer "seat"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["showing_id"], name: "index_bookings_on_showing_id"
+    t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
   create_table "cinemas", force: :cascade do |t|
@@ -38,9 +40,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_02_192543) do
   end
 
   create_table "showings", force: :cascade do |t|
-    t.bigint "cinema_id", null: false
-    t.bigint "movie_id", null: false
-    t.bigint "timeslot_id", null: false
+    t.bigint "cinema_id"
+    t.bigint "movie_id"
+    t.bigint "timeslot_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cinema_id"], name: "index_showings_on_cinema_id"
@@ -69,6 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_02_192543) do
   end
 
   add_foreign_key "bookings", "showings"
+  add_foreign_key "bookings", "users"
   add_foreign_key "showings", "cinemas"
   add_foreign_key "showings", "movies"
   add_foreign_key "showings", "timeslots"

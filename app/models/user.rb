@@ -1,6 +1,8 @@
 class User < ApplicationRecord
     include BCrypt
 
+    has_many(:bookings)
+
     validates(
         :email,
         # presence: true,
