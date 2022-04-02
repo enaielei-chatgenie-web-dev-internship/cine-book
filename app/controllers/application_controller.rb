@@ -1,5 +1,10 @@
 class ApplicationController < ActionController::Base
-    # include ApplicationHelper
+    before_action() do |controller|
+        action = controller.action_name
+        if ["index"].include?(action) && !get_signed_in()
+            redirect_to(new_session_url())
+        end
+    end
 
     def sign_in(user, remembered=false)
         if !remembered
@@ -12,8 +17,8 @@ class ApplicationController < ActionController::Base
         end
     end
 
-    def sign_out(user)
-        if user && is_signed_in(user)
+    def sign_out(user=nil)
+        if user == nil || (user && is_signed_in(user))
             session[:user_id] = nil
             cookies.permanent.signed[:user_id] = nil
             cookies.permanent[:request] = nil

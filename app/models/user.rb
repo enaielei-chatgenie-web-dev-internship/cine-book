@@ -29,6 +29,7 @@ class User < ApplicationRecord
         # presence: true,
         confirmation: true,
         length: {minimum: 6},
+        allow_nil: true
     )
 
     before_save() do

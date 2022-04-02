@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
     before_action() do |controller|
         action = controller.action_name
-        if ["new", "create", "destroy"].include?(action) && get_signed_in()
+        if ["new", "create"].include?(action) && get_signed_in()
             redirect_to(root_url())
         end
     end
@@ -74,10 +74,9 @@ class SessionsController < ApplicationController
 
     def destroy()
         @user = User.find(params[:user_id])
-        debugger()
         if @user
             sign_out(@user)
-            redirect_to(root_url()) if !is_signed_in(@user)
+            redirect_to(root_url()) if !get_signed_in()
         end
     end
 
