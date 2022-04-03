@@ -10,6 +10,14 @@ words = "
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tincidunt lectus sit amet turpis sollicitudin condimentum. Pellentesque pellentesque, odio sit amet semper iaculis, enim felis fringilla tortor, id egestas sem metus auctor quam. Vestibulum tristique consectetur neque in efficitur. Nullam porta est diam, ut tristique quam tempor quis. Sed bibendum, erat vitae tempor feugiat, ex purus mollis lectus, et semper risus diam vitae arcu. Nulla pretium faucibus sapien et interdum. Aenean ex nunc, pharetra ut dui in, congue rhoncus turpis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent lacinia luctus diam vel egestas. Nam consectetur luctus ex nec mollis. Nulla lacinia nec lectus eu elementum. Cras vestibulum mi in lectus malesuada porta.
 ".split(" ")
 
+User.create(
+    email: "admin@email.com",
+    full_name: "Admin",
+    mobile_number: "09292867454",
+    password: "123456",
+    password_confirmation: "123456",
+)
+
 Timeslot.create(
     time: "10:00 AM",
     label: "Morning"
