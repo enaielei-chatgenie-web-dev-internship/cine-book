@@ -16,7 +16,18 @@ User.create(
     mobile_number: "09292867454",
     password: "123456",
     password_confirmation: "123456",
-    activated: true
+    activated: true,
+    admin: true
+)
+
+User.create(
+    email: "user@email.com",
+    full_name: "User",
+    mobile_number: "09292867454",
+    password: "123456",
+    password_confirmation: "123456",
+    activated: true,
+    admin: false
 )
 
 Timeslot.create(
