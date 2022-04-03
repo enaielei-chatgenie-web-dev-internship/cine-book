@@ -12,7 +12,7 @@
 ) do |form| %>
     <%
         icon = "<i class='redo icon'></i>"
-        reset = link_to(raw(icon + "Reset Password"), new_password_reset_path())
+        reset = link_to(raw(icon + "Reset Password"), "#")
     %>
     <div class="field">
         <%= form.label(:email) %>

@@ -1,37 +1,8 @@
-<%
-    signed_in = controller.get_signed_in()
-    admin = signed_in && signed_in.admin?
-    name = controller.action_name
-%>
-<% provide(:title, "Overview") %>
-<%
-
-%>
-<%= render("partials/page_header", title: "New Movie", subtitle: "Add a new movie to the database.") %>
-<div class="ui divider"></div>
-<%= form_with(
-    model: @movie,
-    id: "movie-details-form",
-    class: "ui form",
-    url: create_movie_path()
-) do |form| %>
-    <div class="field">
-        <%= form.label(:title) %>
-        <div class="ui left icon input">
-            <%= form.text_field(:title, placeholder: "JDC Movie", value: nil) %>
-            <i class="id badge icon"></i>
-        </div>
-    </div>
-    <div class="field">
-        <%= form.label(:description) %>
-        <div class="ui left icon input">
-            <%= form.text_area(:description, placeholder: "A description of the movie.", value: nil) %>
-            <i class="id mobile icon"></i>
-        </div>
-    </div>
-    <div class="ui right aligned fitted basic segment">
-        <%= form.submit("Submit", class: "ui orange button") %>
-    </div>
-    <%= render("partials/messages", messages: flash[:messages]) %>
-    <div class="ui error message form-error-message"></div>
-<% end %>
+<h2 class="ui header">
+  <%= Cinema.all.size %>
+  <div class="sub header">Total Number of Cinemas registered.</div>
+</h2>
+<h2 class="ui header">
+  <%= Booking.all.size %>
+  <div class="sub header">Total Number of Bookings registered.</div>
+</h2>

@@ -1,4 +1,9 @@
 class ShowingsController < ApplicationController
+    def index()
+        @movies = Movie.joins(:showings).having('count(showings) > 0').group('movies.id').page(params[:page]).per(params[:count] || 5)
+        render("showings/view_showings")
+    end
+
     def new()
         @cinemas = Cinema.all
         @movies = Movie.all

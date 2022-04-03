@@ -14,7 +14,6 @@
         <%= form.label(:name) %>
         <div class="ui left icon input">
             <%= form.text_field(:name, placeholder: "JDC Cinema", value: nil) %>
-            <i class="id badge icon"></i>
         </div>
     </div>
     <%= form.hidden_field(:seats, value: 10) %>
@@ -23,14 +22,12 @@
             <%= form.label(:location) %>
             <div class="ui left icon input">
                 <%= form.text_field(:location, placeholder: "Bacoor City, Cavite", value: nil) %>
-                <i class="id mobile icon"></i>
             </div>
         </div>
         <div class="field disabled">
             <%= label_tag(:seats_display, "Seats") %>
             <div class="ui left icon input">
                 <%= number_field_tag(nil, 10, id: :seats_display) %>
-                <i class="key icon"></i>
             </div>
         </div>
     </div>

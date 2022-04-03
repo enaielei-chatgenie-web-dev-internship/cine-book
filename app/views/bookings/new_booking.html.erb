@@ -1,0 +1,54 @@
+<% provide(:title, "New Booking") %>
+<%
+    signed_in = controller.get_signed_in()
+    admin = signed_in && signed_in.admin?
+%>
+<%= render("partials/page_header", title: "New Booking", subtitle: "Book a showing movie.") %>
+<div class="ui divider"></div>
+<%= form_with(
+    model: @booking,
+    id: "booking-details-form",
+    class: "ui form",
+    url: create_booking_path()
+) do |form| %>
+    <% if signed_in %>
+        <div class="disabled field">
+            <%= form.hidden_field(:user_id, value: signed_in.id) %>
+            <%= form.label(:user_id_display, "Name") %>
+            <div class="ui left icon">
+                <%= form.text_field(:user_id_display, placeholder: signed_in.full_name, value: nil) %>
+            </div>
+        </div>
+    <% end %>
+    <div class="field">
+        <%= form.label(:showing_id, "Showing") %>
+        <div class="ui selection dropdown">
+            <%= form.hidden_field(:showing_id, placeholder: "Select a Showing") %>
+            <i class="dropdown icon"></i>
+            <div class="default text">Movie</div>
+            <div class="menu">
+                <% for showing in @showings %>
+                    <div class="item" data-value="<%= showing.id %>"><%= showing.movie.title %> at <%= showing.cinema.name %></div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <%= form.label(:seat, "Seat No. (1 being the closest to the screen)") %>
+        <div class="ui selection dropdown">
+            <%= form.hidden_field(:seat, placeholder: "Select a Seat") %>
+            <i class="dropdown icon"></i>
+            <div class="default text">Movie</div>
+            <div class="menu">
+                <% for seat in @seats %>
+                    <div class="item" data-value="<%= seat %>"><%= seat %></div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <div class="ui right aligned fitted basic segment">
+        <%= form.submit("Submit", class: "ui orange button") %>
+    </div>
+    <%= render("partials/messages", messages: flash[:messages]) %>
+    <div class="ui error message form-error-message"></div>
+<% end %>

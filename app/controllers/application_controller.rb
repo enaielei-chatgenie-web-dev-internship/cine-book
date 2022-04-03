@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
         end
     end
 
+    def index()
+        render("application/index")
+    end
+
     def sign_in(user, remembered=false)
         if !remembered
             session[:user_id] = user.id

@@ -45,7 +45,7 @@
                     disabled = false
                     active = page == cpage
                 %>
-                <%= Utils.page_link(
+                <%= page_link(
                     body: first_label,
                     options: options.merge(
                         page_param => cpage
@@ -64,7 +64,7 @@
                     cpage = !disabled ? page - 1 : page
                     active = page == cpage
                 %>
-                <%= Utils.page_link(
+                <%= page_link(
                     body: previous_label,
                     options: options.merge(
                         page_param => cpage
@@ -85,7 +85,7 @@
                     disabled = false
                     active = page == cpage
                 %>
-                <%= Utils.page_link(
+                <%= page_link(
                     body: p.to_s(),
                     options: options.merge(
                         page_param => cpage
@@ -104,7 +104,7 @@
                     cpage = !disabled ? page + 1 : page
                     active = page == cpage
                 %>
-                <%= Utils.page_link(
+                <%= page_link(
                     body: next_label,
                     options: options.merge(
                         page_param => cpage
@@ -123,7 +123,7 @@
                     disabled = false
                     active = page == cpage
                 %>
-                <%= Utils.page_link(
+                <%= page_link(
                     body: last_label,
                     options: options.merge(
                         page_param => cpage

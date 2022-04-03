@@ -50,15 +50,6 @@ module Utils
         return name == controller_name && action_names.include?(action)
     end
 
-    def self.page_link(properties={})
-        props = properties
-        options = props[:options] || {}
-        html_options = props[:html_options] || {}
-
-        body = props[:body] || ""
-        return link_to(body || page.to_s(), options, html_options)
-    end
-
     def self.random(size=10)
         return SecureRandom.urlsafe_base64(size)
     end

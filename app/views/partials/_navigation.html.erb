@@ -12,45 +12,47 @@
             data: nil
         },
         {
-            url: signed_in ? root_path() : nil,
-            active: Utils.is_page(controller, "application", "index"),
+            url: signed_in ? (admin ? root_path() : new_booking_path()) : nil,
+            active: Utils.is_page(controller, "application", "index") || Utils.is_page(
+                controller, "bookings", "new"
+            ),
             text: "Overview",
-            icon: "orange lock",
+            icon: "orange eye",
             data: nil
         },
         {
             url: admin ? new_cinema_path() : nil,
             active: Utils.is_page(controller, "cinemas", "new"),
             text: "Cinemas",
-            icon: "orange lock",
+            icon: "orange theater masks",
             data: nil
         },
         {
             url: admin ? new_movie_path() : nil,
             active: Utils.is_page(controller, "movies", "new"),
             text: "Movies",
-            icon: "orange lock",
+            icon: "orange film",
             data: nil
         },
         {
             url: admin ? new_timeslot_path() : nil,
             active: Utils.is_page(controller, "timeslots", "new"),
             text: "Timeslots",
-            icon: "orange lock",
+            icon: "orange clock",
             data: nil
         },
         {
-            url: signed_in && admin ? view_showings_path() : (signed_in ? show_showings_path() : nil),
-            active: Utils.is_page(controller, "showings", "new"),
+            url: signed_in && admin ? new_showing_path() : (signed_in ? show_showings_path() : nil),
+            active: Utils.is_page(controller, "showings", "new", "create", "index", "show"),
             text: "Showings",
-            icon: "orange lock",
+            icon: "orange tv",
             data: nil
         },
         {
             url: signed_in ? destroy_session_path(user_id: signed_in.id) : nil,
             active: Utils.is_page(controller, "session", "destroy"),
             text: "Sign Out",
-            icon: "orange lock",
+            icon: "orange sign out alternate",
             data: {
                 turbo_method: :delete,
                 turbo_confirm: 'Are you sure you want to sign out?'

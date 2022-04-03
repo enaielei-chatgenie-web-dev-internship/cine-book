@@ -1,4 +1,4 @@
-<% provide(:title, @movie.title) %>
+<% provide(:title, "Now Showing") %>
 <%
     pagination = {
         page: @movies.current_page(),
@@ -10,8 +10,8 @@
     }
 %>
 <h2 class="ui header">
-    <%= @movie.title %>
-    <div class="sub header"><%= movie.description %></div>
+    Now Showing
+    <div class="sub header">The movies that you can book right now.</div>
 </h2>
 <div class="ui divider"></div>
 <%= render("partials/messages", messages: flash[:messages]) %>

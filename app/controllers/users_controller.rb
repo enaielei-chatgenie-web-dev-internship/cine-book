@@ -2,7 +2,11 @@ class UsersController < ApplicationController
     before_action() do |controller|
         action = controller.action_name
         if ["new", "create"].include?(action) && get_signed_in()
-            redirect_to(root_url())
+            if get_signed_in().admin?
+                redirect_to(root_url())
+            else
+                redirect_to(new_booking_url())
+            end
         end
     end
 
@@ -15,12 +19,19 @@ class UsersController < ApplicationController
         @user = User.new(get_params())
         
         if @user.save()
-            UserMailer.account_activation(@user).deliver_now()
+            # UserMailer.account_activation(@user).deliver_now()
+            # Utils.add_messages(
+            #     flash,
+            #     "Successful account registration",
+            #     "Please check your email for account activation.",
+            #     "info"
+            # )
+            @user.update(activated: true)
             Utils.add_messages(
                 flash,
                 "Successful account registration",
-                "Please check your email for account activation.",
-                "info"
+                "You can try logging in your account now.",
+                "positive"
             )
             redirect_to(new_user_url())
         else

@@ -1,0 +1,16 @@
+<%
+%>
+<div class="ui fluid card">
+    <div class="content">
+      <a class="header" href="<%= show_showing_path(movie.id) %>"><%= movie.title %></a>
+      <div class="description">
+        <%= movie.description %>
+      </div>
+    </div>
+    <div class="extra content">
+      <a href="<%= show_showing_path(movie.id) %>">
+        <i class="check icon"></i>
+        In <%= movie.showings.size %> cinema(s).
+      </a>
+    </div>
+</div>

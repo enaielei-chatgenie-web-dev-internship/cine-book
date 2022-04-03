@@ -36,4 +36,8 @@ Rails.application.routes.draw do
   post("/new-showing", to: "showings#create", as: :create_showing)
   get("/view-showing", to: "showings#index", as: :show_showings)
   get("/view-showing/:id", to: "showings#show", as: :show_showing)
+
+  # Bookings
+  get("/new-booking", to: "bookings#new", as: :new_booking)
+  post("/new-booking", to: "bookings#create", as: :create_booking)
 end

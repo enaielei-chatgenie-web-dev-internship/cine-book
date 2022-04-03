@@ -2,7 +2,11 @@ class SessionsController < ApplicationController
     before_action() do |controller|
         action = controller.action_name
         if ["new", "create"].include?(action) && get_signed_in()
-            redirect_to(root_url())
+            if get_signed_in().admin?()
+                redirect_to(root_url())
+            else 
+                redirect_to(new_booking_url())
+            end
         end
     end
 
@@ -43,7 +47,11 @@ class SessionsController < ApplicationController
                     remembered = @session_[:remembered]
                     remembered = remembered && !remembered.empty?() && remembered != "0"
                     sign_in(@user, remembered)
-                    return redirect_to(root_url())
+                    if @user.admin?
+                        return redirect_to(root_url())
+                    else
+                        return redirect_to(new_booking_url())
+                    end
                 else
                     Utils.add_messages(
                         flash.now,
