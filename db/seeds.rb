@@ -16,6 +16,7 @@ User.create(
     mobile_number: "09292867454",
     password: "123456",
     password_confirmation: "123456",
+    activated: true
 )
 
 Timeslot.create(
