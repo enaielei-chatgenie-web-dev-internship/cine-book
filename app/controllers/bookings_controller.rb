@@ -35,6 +35,7 @@ class BookingsController < ApplicationController
         @booking = Booking.new(get_params())
         @bookings = signed_in && signed_in.admin? ? Booking.all.page(params[:page]).per(params[:count] || 5) : signed_in.bookings.page(params[:page]).per(params[:count] || 5)
         @showings = Showing.all
+        @seats_free = @showing ? @showing.seats_free : []
 
         if @booking.user != get_signed_in()
             Utils.add_messages(
