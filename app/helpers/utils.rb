@@ -59,6 +59,12 @@ module Utils
     end
 
     def self.compare(token, random)
-        return BCrypt::Password.new(token) == random
+        begin
+            return BCrypt::Password.new(token) == random
+        rescue
+        ensure
+        end
+        
+        return false
     end
 end
