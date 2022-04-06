@@ -12,7 +12,10 @@
     <%= image_tag(@booking.showing.movie.image.attached? ? @booking.showing.movie.image : get_placeholder(), class: "ui circular image profile-image") %>
     <div class="content">
         <%= link_to(@booking.showing.movie.title, show_movie_path(@booking.showing.movie)) %>
-        <div class="sub header"><%= @booking.showing.timeslot.pretty_time %> at <%= link_to(@booking.showing.cinema.name, "#") %> on Seat <%= @booking.seat %></div>
+        <div class="sub header">
+            <%= @booking.showing.timeslot.pretty_time %> at <%= link_to(@booking.showing.cinema.name, "#") %> on Seat <%= @booking.seat %>
+           <p>for <%= @booking.user.full_name %></p>
+        </div>
     </div>
 </h2>
 

@@ -30,40 +30,40 @@ User.create(
     admin: false
 )
 
-Timeslot.create(
-    time: "10:00 AM",
-    label: "Morning"
-)
+# Timeslot.create(
+#     time: "10:00 AM",
+#     label: "Morning"
+# )
 
-Timeslot.create(
-    time: "2:00 PM",
-    label: "Afternoon"
-)
+# Timeslot.create(
+#     time: "2:00 PM",
+#     label: "Afternoon"
+# )
 
-Timeslot.create(
-    time: "6:00 PM",
-    label: "Evening"
-)
+# Timeslot.create(
+#     time: "6:00 PM",
+#     label: "Evening"
+# )
 
-Timeslot.create(
-    time: "10:00 PM",
-    label: "Night"
-)
+# Timeslot.create(
+#     time: "10:00 PM",
+#     label: "Night"
+# )
 
-for i in 0..19
-    Cinema.create(
-        name: words.shuffle()[..5].join(" "),
-        location: words.shuffle()[..30].join(" "),
-    )
+# for i in 0..19
+#     Cinema.create(
+#         name: words.shuffle()[..5].join(" "),
+#         location: words.shuffle()[..30].join(" "),
+#     )
 
-    Movie.create(
-        title: words.shuffle()[..5].join(" "),
-        description: words.shuffle()[..30].join(" "),
-    )
+#     Movie.create(
+#         title: words.shuffle()[..5].join(" "),
+#         description: words.shuffle()[..30].join(" "),
+#     )
 
-    Showing.create(
-        cinema_id: Cinema.all.sample.id,
-        movie_id: Movie.all.sample.id,
-        timeslot_id: Timeslot.all.sample.id,
-    )
-end
+#     Showing.create(
+#         cinema_id: Cinema.all.sample.id,
+#         movie_id: Movie.all.sample.id,
+#         timeslot_id: Timeslot.all.sample.id,
+#     )
+# end

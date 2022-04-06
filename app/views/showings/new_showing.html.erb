@@ -1,5 +1,7 @@
 <% provide(:title, "Showings") %>
 <%
+    signed_in = controller.get_signed_in()
+    admin = signed_in && signed_in.admin?
     pagination = {
         page: @showings.current_page(),
         pages: @showings.total_pages(),
@@ -9,55 +11,63 @@
         }
     }
 %>
-<%= render("partials/page_header", title: "Showings", subtitle: "View your registered showings.") %>
+<%= render("partials/page_header", title: "Showings", subtitle: admin ? "View your registered showings." : "Look for showings of movies.") %>
+<div class="ui basic labels">
+    <a class="ui label">
+        Total
+        <div class="detail"><%= @showings.total_count %></div>
+    </a>
+</div>
 <div class="ui divider"></div>
-<%= form_with(
-    model: @showing,
-    id: "showing-details-form",
-    class: "ui form",
-    url: create_showing_path()
-) do |form| %>
-    <div class="field">
-        <%= form.label(:cinema_id, "Cinema") %>
-        <div id="showing-cinema" class="ui selection dropdown">
-            <%= form.hidden_field(:cinema_id, placeholder: "Select a Cinema") %>
-            <i class="dropdown icon"></i>
-            <div class="default text">Cinema</div>
-            <div class="menu">
-                <% for cinema in @cinemas %>
-                    <div class="item" data-value="<%= cinema.id %>"><%= cinema.name %></div>
-                <% end %>
+<% if admin %>
+    <%= form_with(
+        model: @showing,
+        id: "showing-details-form",
+        class: "ui form",
+        url: create_showing_path()
+    ) do |form| %>
+        <div class="field">
+            <%= form.label(:cinema_id, "Cinema") %>
+            <div id="showing-cinema" class="ui selection dropdown">
+                <%= form.hidden_field(:cinema_id, placeholder: "Select a Cinema") %>
+                <i class="dropdown icon"></i>
+                <div class="default text">Cinema</div>
+                <div class="menu">
+                    <% for cinema in @cinemas %>
+                        <div class="item" data-value="<%= cinema.id %>"><%= cinema.name %></div>
+                    <% end %>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="field">
-        <%= form.label(:movie_id, "Movie") %>
-        <div id="showing-movie" class="ui selection dropdown">
-            <%= form.hidden_field(:movie_id, placeholder: "Select a Movie") %>
-            <i class="dropdown icon"></i>
-            <div class="default text">Movie</div>
-            <div class="menu">
-                <% for movie in @movies %>
-                    <div class="item" data-value="<%= movie.id %>"><%= movie.title %></div>
-                <% end %>
+        <div class="field">
+            <%= form.label(:movie_id, "Movie") %>
+            <div id="showing-movie" class="ui selection dropdown">
+                <%= form.hidden_field(:movie_id, placeholder: "Select a Movie") %>
+                <i class="dropdown icon"></i>
+                <div class="default text">Movie</div>
+                <div class="menu">
+                    <% for movie in @movies %>
+                        <div class="item" data-value="<%= movie.id %>"><%= movie.title %></div>
+                    <% end %>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="field">
-        <%= form.label(:timeslot_id, "Timeslot") %>
-        <div id="showing-timeslot" class="ui selection dropdown disabled">
-            <%= form.hidden_field(:timeslot_id, placeholder: "Select a Timeslot") %>
-            <i class="dropdown icon"></i>
-            <div class="default text">Timeslot</div>
-            <div class="menu">
+        <div class="field">
+            <%= form.label(:timeslot_id, "Timeslot") %>
+            <div id="showing-timeslot" class="ui selection dropdown disabled">
+                <%= form.hidden_field(:timeslot_id, placeholder: "Select a Timeslot") %>
+                <i class="dropdown icon"></i>
+                <div class="default text">Timeslot</div>
+                <div class="menu">
+                </div>
             </div>
         </div>
-    </div>
-    <div class="ui right aligned fitted basic segment">
-        <%= form.submit("Register", class: "ui orange button") %>
-    </div>
-    <%= render("partials/messages", messages: flash[:messages]) %>
-    <div class="ui error message form-error-message"></div>
+        <div class="ui right aligned fitted basic segment">
+            <%= form.submit("Register", class: "ui orange button") %>
+        </div>
+        <%= render("partials/messages", messages: flash[:messages]) %>
+        <div class="ui error message form-error-message"></div>
+    <% end %>
 <% end %>
 
 <% if @showings.any? %>
@@ -65,7 +75,7 @@
 
     <div class="ui segment">
         <div class="ui list">
-            <%= render(@showings, view: true, delete: true) %>
+            <%= render(@showings, view: true, delete: admin, book: !admin) %>
         </div>
         
         <% if @showings.total_pages > 1 %>

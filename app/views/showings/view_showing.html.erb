@@ -1,4 +1,6 @@
 <%
+    signed_in = controller.get_signed_in()
+    admin = signed_in && signed_in.admin?
     # pagination = {
     #     page: @showings.current_page(),
     #     pages: @showings.total_pages(),
@@ -12,7 +14,7 @@
     <%= image_tag(@showing.movie.image.attached? ? @showing.movie.image : get_placeholder(), class: "ui circular image profile-image") %>
     <div class="content">
         <%= link_to(@showing.movie.title, show_movie_path(@showing.movie)) %>
-        <div class="sub header"><%= link_to(@showing.timeslot.pretty_time, show_timeslot_path(@showing.timeslot)) %> at <%= link_to(@showing.cinema.name, show_cinema_path(@showing.cinema)) %></div>
+        <div class="sub header"><%= @showing.timeslot.pretty_time %> at <%= link_to(@showing.cinema.name, show_cinema_path(@showing.cinema)) %></div>
     </div>
 </h2>
 
@@ -34,7 +36,7 @@
                     <% if col %>
                         <a class="ui fluid button disabled"><strong><%= count %></strong></a>
                     <% else %>
-                        <a class="ui basic fluid button"><strong><%= count %></strong></a>
+                        <a href="<%= !admin ? new_booking_path(booking: {showing_id: @showing.id, seat: count}) : '#' %>" class="ui basic fluid button"><strong><%= count %></strong></a>
                     <% end %>
                 </div>
             <% end %>

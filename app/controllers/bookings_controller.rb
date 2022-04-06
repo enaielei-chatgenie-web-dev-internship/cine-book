@@ -17,17 +17,23 @@ class BookingsController < ApplicationController
         render("bookings/view_booking")
     end
 
-    def new() 
-        @booking = Booking.new()
-        @bookings = Booking.all.page(params[:page]).per(params[:count] || 5)
+    def new()
+        signed_in = get_signed_in()
+
+        @booking = Booking.new(params[:booking] ? get_params() : nil)
+        @bookings = signed_in && signed_in.admin? ? Booking.all.page(params[:page]).per(params[:count] || 5) : signed_in.bookings.page(params[:page]).per(params[:count] || 5)
         @showings = Showing.all
+        @showing = @booking.showing
+        @seats_free = @showing ? @showing.seats_free : []
 
         render("bookings/new_booking")
     end
   
     def create()
+        signed_in = get_signed_in()
+
         @booking = Booking.new(get_params())
-        @bookings = Booking.all.page(params[:page]).per(params[:count] || 5)
+        @bookings = signed_in && signed_in.admin? ? Booking.all.page(params[:page]).per(params[:count] || 5) : signed_in.bookings.page(params[:page]).per(params[:count] || 5)
         @showings = Showing.all
 
         if @booking.user != get_signed_in()

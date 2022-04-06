@@ -1,6 +1,7 @@
 <% provide(:title, "Bookings") %>
 <%
     signed_in = controller.get_signed_in()
+    admin = signed_in && signed_in.admin?
     pagination = {
         page: @bookings.current_page(),
         pages: @bookings.total_pages(),
@@ -10,50 +11,61 @@
         }
     }
 %>
-<%= render("partials/page_header", title: "Bookings", subtitle: "View your registered bookings.") %>
+<%= render("partials/page_header", title: "Bookings", subtitle: admin ? "View the bookings registered by the users." : "Look for your bookings of different showings.") %>
+<div class="ui basic labels">
+    <a class="ui label">
+        Total
+        <div class="detail"><%= @bookings.total_count %></div>
+    </a>
+</div>
 <div class="ui divider"></div>
-<%= form_with(
-    model: @booking,
-    id: "booking-details-form",
-    class: "ui form",
-    url: create_booking_path()
-) do |form| %>
-    <%= form.hidden_field(:user_id, value: signed_in.id) %>
-    <div class="disabled field">
-        <%= form.label(:user_display, "User") %>
-        <div class="ui left icon input">
-            <%= text_field_tag("user_display", signed_in.full_name) %>
-            <i class="user circle icon"></i>
-        </div>
-    </div>
-    <div class="field">
-        <%= form.label(:showing_id, "Showing") %>
-        <div id="booking-showing" class="ui selection dropdown">
-            <%= form.hidden_field(:showing_id, placeholder: "Select a Showing") %>
-            <i class="dropdown icon"></i>
-            <div class="default text">Showing</div>
-            <div class="menu">
-                <% for showing in @showings %>
-                    <div class="item" data-value="<%= showing.id %>"><%= "#{showing.cinema.name} - #{showing.movie.title} - #{showing.timeslot.pretty_time}" %></div>
-                <% end %>
+<% if !admin %>
+    <%= form_with(
+        model: @booking,
+        id: "booking-details-form",
+        class: "ui form",
+        url: create_booking_path()
+    ) do |form| %>
+        <%= form.hidden_field(:user_id, value: signed_in.id) %>
+        <div class="disabled field">
+            <%= form.label(:user_display, "User") %>
+            <div class="ui left icon input">
+                <%= text_field_tag("user_display", signed_in.full_name) %>
+                <i class="user circle icon"></i>
             </div>
         </div>
-    </div>
-    <div class="field">
-        <%= form.label(:seat) %>
-        <div id="booking-seat" class="ui selection disabled dropdown">
-            <%= form.hidden_field(:seat, placeholder: "Select a Seat") %>
-            <i class="dropdown icon"></i>
-            <div class="default text">Seat</div>
-            <div class="menu">
+        <div class="field">
+            <%= form.label(:showing_id, "Showing") %>
+            <div id="booking-showing" class="ui selection dropdown">
+                <%= form.hidden_field(:showing_id, placeholder: "Select a Showing") %>
+                <i class="dropdown icon"></i>
+                <div class="default text">Showing</div>
+                <div class="menu">
+                    <% for showing in @showings %>
+                        <div class="item" data-value="<%= showing.id %>"><%= "#{showing.cinema.name} - #{showing.movie.title} - #{showing.timeslot.pretty_time}" %></div>
+                    <% end %>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="ui right aligned fitted basic segment">
-        <%= form.submit("Register", class: "ui orange button") %>
-    </div>
-    <%= render("partials/messages", messages: flash[:messages]) %>
-    <div class="ui error message form-error-message"></div>
+        <div class="field">
+            <%= form.label(:seat) %>
+            <div id="booking-seat" class="ui selection dropdown <%= !@booking.showing ? 'disabled' : '' %>">
+                <%= form.hidden_field(:seat, placeholder: "Select a Seat") %>
+                <i class="dropdown icon"></i>
+                <div class="default text">Seat</div>
+                <div class="menu">
+                    <% for seat in @seats_free %>
+                        <div class="item" data-value="<%= seat %>"><%= "#{seat}" %></div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+        <div class="ui right aligned fitted basic segment">
+            <%= form.submit("Register", class: "ui orange button") %>
+        </div>
+        <%= render("partials/messages", messages: flash[:messages]) %>
+        <div class="ui error message form-error-message"></div>
+    <% end %>
 <% end %>
 
 <% if @bookings.any? %>

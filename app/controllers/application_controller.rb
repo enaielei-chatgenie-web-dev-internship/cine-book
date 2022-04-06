@@ -92,6 +92,14 @@ class ApplicationController < ActionController::Base
 
 
     def index()
+        signed_in = get_signed_in()
+
+        @cinemas = Cinema.all
+        @movies = Movie.all
+        @timeslots = Timeslot.all
+        @showings = Showing.all
+        @bookings = signed_in && !signed_in.admin? ? signed_in.bookings : Booking.all
+
         render("application/index")
     end
 

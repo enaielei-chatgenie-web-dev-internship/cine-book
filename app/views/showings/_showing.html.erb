@@ -1,6 +1,8 @@
 <%
     view ||= false
     delete ||= false
+    book ||= false
+    book = book && showing.seats_free.any?
 
     controls = []
 
@@ -10,6 +12,7 @@
             turbo_method: :delete,
             turbo_confirm: 'Are you sure you want to delete this showing?'
     })) if delete
+    controls.append(link_to("Book", new_booking_path(booking: {showing_id: showing.id}))) if book
 
     scontrols = controls.join(" | ")
 %>

@@ -12,6 +12,12 @@
     }
 %>
 <%= render("partials/page_header", title: "Cinemas", subtitle: admin ? "View your registered cinemas." : "Look for diffent cinemas to watch a movie.") %>
+<div class="ui basic labels">
+    <a class="ui label">
+        Total
+        <div class="detail"><%= @cinemas.total_count %></div>
+    </a>
+</div>
 <div class="ui divider"></div>
 <% if admin %>
     <%= form_with(
@@ -61,7 +67,7 @@
 
     <div class="ui segment">
         <div class="ui list">
-            <%= render(@cinemas, view: true, delete: true) %>
+            <%= render(@cinemas, view: true, delete: admin) %>
         </div>
         
         <% if @cinemas.total_pages > 1 %>

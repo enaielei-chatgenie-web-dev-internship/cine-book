@@ -26,7 +26,7 @@
             data: nil
         },
         {
-            url: admin ? new_movie_path() : nil,
+            url: signed_in ? new_movie_path() : nil,
             active: Utils.is_page(controller, "movies", "new", "create", "show"),
             text: "Movies",
             icon: "orange film",
@@ -40,7 +40,7 @@
             data: nil
         },
         {
-            url: signed_in && admin ? new_showing_path() : (nil),
+            url: signed_in ? new_showing_path() : (nil),
             active: Utils.is_page(controller, "showings", "new", "create", "show"),
             text: "Showings",
             icon: "orange tv",

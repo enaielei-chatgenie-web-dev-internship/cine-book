@@ -1,4 +1,6 @@
 <%
+    signed_in = controller.get_signed_in()
+    admin = signed_in && signed_in.admin?
     pagination = {
         page: @showings.current_page(),
         pages: @showings.total_pages(),
@@ -32,7 +34,7 @@
     <div class="ui bottom attached segment orange content">
         <% if @showings.any?() %>
             <div class="ui divided relaxed middle aligned list">
-                <%= render(@showings) %>
+                <%= render(@showings, view: true, book: !admin) %>
             </div>
         <% else %>
             <span>There's nothing to see here.</span>

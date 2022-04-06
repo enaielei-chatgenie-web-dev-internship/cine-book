@@ -1,5 +1,7 @@
 <% provide(:title, "Movies") %>
 <%
+    signed_in = controller.get_signed_in()
+    admin = signed_in && signed_in.admin?
     pagination = {
         page: @movies.current_page(),
         pages: @movies.total_pages(),
@@ -9,38 +11,46 @@
         }
     }
 %>
-<%= render("partials/page_header", title: "Movies", subtitle: "View your registered movies.") %>
+<%= render("partials/page_header", title: "Movies", subtitle: admin ? "View your registered movies." : "Look for different movies to watch.") %>
+<div class="ui basic labels">
+    <a class="ui label">
+        Total
+        <div class="detail"><%= @movies.total_count %></div>
+    </a>
+</div>
 <div class="ui divider"></div>
-<%= form_with(
-    model: @movie,
-    id: "movie-details-form",
-    class: "ui form",
-    url: create_movie_path()
-) do |form| %>
-    <div class="field">
-        <%= form.label(:title) %>
-        <div class="ui left icon input">
-            <%= form.text_field(:title, placeholder: "JDC Movie", value: nil) %>
-            <i class="tag icon"></i>
+<% if admin %>
+    <%= form_with(
+        model: @movie,
+        id: "movie-details-form",
+        class: "ui form",
+        url: create_movie_path()
+    ) do |form| %>
+        <div class="field">
+            <%= form.label(:title) %>
+            <div class="ui left icon input">
+                <%= form.text_field(:title, placeholder: "JDC Movie", value: nil) %>
+                <i class="tag icon"></i>
+            </div>
         </div>
-    </div>
-    <div class="field">
-        <%= form.label(:description) %>
-        <div class="ui left icon input">
-            <%= form.text_area(:description, placeholder: "A description of the movie.", value: nil) %>
-            <i class="pen icon"></i>
+        <div class="field">
+            <%= form.label(:description) %>
+            <div class="ui left icon input">
+                <%= form.text_area(:description, placeholder: "A description of the movie.", value: nil) %>
+                <i class="pen icon"></i>
+            </div>
         </div>
-    </div>
-    <div class="field">
-        <%= form.label(:image) %>
-        <%= form.file_field(:image, class: "image-upload", accept: $VALID_IMAGE_UPLOAD) %>
-    </div>
-    <%= render("partials/image_preview") %>
-    <div class="ui right aligned fitted basic segment">
-        <%= form.submit("Register", class: "ui orange button") %>
-    </div>
-    <%= render("partials/messages", messages: flash[:messages]) %>
-    <div class="ui error message form-error-message"></div>
+        <div class="field">
+            <%= form.label(:image) %>
+            <%= form.file_field(:image, class: "image-upload", accept: $VALID_IMAGE_UPLOAD) %>
+        </div>
+        <%= render("partials/image_preview") %>
+        <div class="ui right aligned fitted basic segment">
+            <%= form.submit("Register", class: "ui orange button") %>
+        </div>
+        <%= render("partials/messages", messages: flash[:messages]) %>
+        <div class="ui error message form-error-message"></div>
+    <% end %>
 <% end %>
 
 <% if @movies.any? %>
@@ -48,7 +58,7 @@
 
     <div class="ui segment">
         <div class="ui list">
-            <%= render(@movies, view: true, delete: true) %>
+            <%= render(@movies, view: true, delete: admin) %>
         </div>
         
         <% if @movies.total_pages > 1 %>

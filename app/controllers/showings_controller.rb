@@ -2,7 +2,7 @@ class ShowingsController < ApplicationController
     before_action() do |controller|
         action = controller.action_name
         signed_in = get_signed_in()
-        unless signed_in && signed_in.admin?
+        unless signed_in
             redirect_to(new_session_url())
         end
     end

@@ -1,8 +1,39 @@
-<h2 class="ui header">
-  <%= Cinema.all.size %>
-  <div class="sub header">Total Number of Cinemas registered.</div>
-</h2>
-<h2 class="ui header">
-  <%= Booking.all.size %>
-  <div class="sub header">Total Number of Bookings registered.</div>
-</h2>
+<% provide(:title, "Overview") %>
+<%
+    signed_in = controller.get_signed_in()
+    admin = signed_in && signed_in.admin?
+%>
+<div class="ui center aligned top attached orange segment">
+  <h2 class="ui center aligned header">
+      <div class="content">
+          <%= signed_in.full_name %>
+          <div class="sub header"><%= signed_in.email %></div>
+      </div>
+  </h2>
+</div>
+<div class="ui center aligned basic fitted segment">
+  <div class="ui basic medium large labels">
+      <% if admin %>
+        <a class="ui label" href="<%= new_cinema_path() %>">
+            Cinemas
+            <div class="detail"><%= @cinemas.size %></div>
+        </a>
+        <a class="ui label" href="<%= new_movie_path() %>">
+            Movies
+            <div class="detail"><%= @movies.size %></div>
+        </a>
+        <a class="ui label" href="<%= new_timeslot_path() %>">
+            Timeslots
+            <div class="detail"><%= @timeslots.size %></div>
+        </a>
+      <% end %>
+      <a class="ui label" href="<%= new_showing_path() %>">
+          Showings
+          <div class="detail"><%= @showings.size %></div>
+      </a>
+      <a class="ui label" href="<%= new_booking_path() %>">
+          Bookings
+          <div class="detail"><%= @bookings.size %></div>
+      </a>
+  </div>
+</div>
