@@ -48,7 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_06_054305) do
     t.integer "seat"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["showing_id", "user_id", "seat"], name: "index_bookings_on_showing_id_and_user_id_and_seat", unique: true
+    t.index ["showing_id", "seat"], name: "index_bookings_on_showing_id_and_seat", unique: true
     t.index ["showing_id"], name: "index_bookings_on_showing_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
@@ -81,7 +81,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_06_054305) do
   end
 
   create_table "timeslots", force: :cascade do |t|
-    t.time "time", default: "2000-01-01 04:52:46"
+    t.time "time", default: "2000-01-01 10:23:59"
     t.string "label"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

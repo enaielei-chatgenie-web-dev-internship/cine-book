@@ -5,7 +5,7 @@ class CreateBookings < ActiveRecord::Migration[7.0]
       t.belongs_to(:user, foreign_key: true)
       t.integer(:seat)
 
-      t.index([:showing_id, :user_id, :seat], unique: true)
+      t.index([:showing_id, :seat], unique: true)
 
       t.timestamps
     end

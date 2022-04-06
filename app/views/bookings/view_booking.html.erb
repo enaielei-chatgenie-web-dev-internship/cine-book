@@ -1,0 +1,87 @@
+<%
+    # pagination = {
+    #     page: @bookings.current_page(),
+    #     pages: @bookings.total_pages(),
+    #     pages_display: 2,
+    #     options: {
+    #         count: params[:count]
+    #     }
+    # }
+%>
+<h2 class="ui center aligned icon header">
+    <%= image_tag(@booking.showing.movie.image.attached? ? @booking.showing.movie.image : get_placeholder(), class: "ui circular image profile-image") %>
+    <div class="content">
+        <%= link_to(@booking.showing.movie.title, show_movie_path(@booking.showing.movie)) %>
+        <div class="sub header"><%= @booking.showing.timeslot.pretty_time %> at <%= link_to(@booking.showing.cinema.name, "#") %> on Seat <%= @booking.seat %></div>
+    </div>
+</h2>
+
+<div class="ui divider"></div>
+
+<div class="ui segment">
+    <div class="ui top attached label">
+        Seats (<%= @seats_taken.size %> taken, <%= @seats_free.size %> free)
+    </div>
+    <div class="ui grid seats">
+        <%
+            count = 0
+            for row in @seats_layout %>
+            <div class="five column row">
+            <% for col in row
+                count += 1
+            %>    
+                <div class="column">
+                    <% if col %>
+                        <% if count == @booking.seat %>
+                            <a class="ui fluid button disabled green"><strong><%= count %></strong></a>
+                        <% else %>
+                            <a class="ui fluid button disabled"><strong><%= count %></strong></a>
+                        <% end %>
+                    <% else %>
+                        <a class="ui basic fluid button"><strong><%= count %></strong></a>
+                    <% end %>
+                </div>
+            <% end %>
+            </div>
+        <% end %>
+    </div>
+</div>
+
+<% if false %>
+    <div class="ui accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            <h3 class="ui header">
+                <div class="content">
+                    <i class="orange icon tv"></i>
+                    Bookings (<%= @bookings.total_count %>)
+                    <div class="sub header">The bookings for this timeslot.</div>
+                </div>
+            </h3>
+        </div>
+        <div class="ui bottom attached segment orange content">
+            <% if @bookings.any?() %>
+                <div class="ui divided relaxed middle aligned list">
+                    <%= render(@bookings) %>
+                </div>
+            <% else %>
+                <span>There's nothing to see here.</span>
+            <% end %>
+            <% if @bookings.total_pages > 1 %>
+                <div class="ui center aligned basic fitted segment">
+                    <%= render("partials/pagination", pagination) %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+
+    <%
+        active = params[:active]
+        accordion = [
+            "bookings"
+        ]
+        index = accordion.index(active)
+        if index != nil %>
+        <%= javascript_tag("$(\".ui.accordion\").accordion(\"open\", #{index})")%>
+    <% end %>
+<% end %>

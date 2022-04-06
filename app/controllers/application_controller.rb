@@ -31,6 +31,13 @@ class ApplicationController < ActionController::Base
                         value: m.id,
                     }
                 end
+            elsif data == "showings"
+                for s in Showing.all
+                    response[:results] << {
+                        name: "#{s.cinema.name} - #{s.movie.title} - #{s.timeslot.pretty_time}",
+                        value: s.id,
+                    }
+                end
             elsif data == "showing-timeslots"
                 cinema_id = params[:cinema_id]
                 movie_id = params[:movie_id]
@@ -47,6 +54,29 @@ class ApplicationController < ActionController::Base
                                 ""
                             ),
                             value: t.id
+                        }
+                    end
+                else
+                    response[:success] = false
+                end
+            elsif data == "booking-showings"
+                for s in Showing.all
+                    if s.seats_free.size != 0
+                        response[:results] << {
+                            name: "#{s.cinema.name} - #{s.movie.title} - #{s.timeslot.pretty_time}",
+                            value: s.id,
+                        }
+                    end
+                end
+            elsif data == "booking-seats"
+                showing_id = params[:showing_id]
+                showing = Showing.find(showing_id)
+
+                if showing
+                    for s in showing.seats_free
+                        response[:results] << {
+                            name: s.to_s(),
+                            value: s
                         }
                     end
                 else

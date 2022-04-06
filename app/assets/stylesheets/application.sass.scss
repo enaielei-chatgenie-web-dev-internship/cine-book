@@ -52,9 +52,26 @@ footer {
 }
 
 .entry-image {
+    @extend .fit-image;
     width: 3em !important;
     height: 3em !important;
+}
+
+.fit-image {
     object-fit: contain;
+}
+
+.centered-fit-image {
+    @extend .fit-image;
+    position: relative;
+    overflow: hidden;
+
+    > img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
 
 .ui.accordion > .title > .ui.header {
@@ -70,10 +87,15 @@ footer {
 .profile-image {
     width: 3.5em !important;
     height: 3.5em !important;
+    object-fit: contain;
 }
 
 .seats {
     .column {
         padding: 0.10em !important;
     }
+}
+
+.horizontal.card {
+    margin-bottom: 0;
 }

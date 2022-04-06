@@ -27,4 +27,8 @@ class Cinema < ApplicationRecord
             message: "should be less than 5MB"
         }
     )
+
+    def bookings()
+        return Booking.joins(:showing).where("showings.cinema_id = ?", id)
+    end
 end

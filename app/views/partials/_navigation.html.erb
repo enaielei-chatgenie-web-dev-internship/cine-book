@@ -19,7 +19,7 @@
             data: nil
         },
         {
-            url: admin ? new_cinema_path() : nil,
+            url: signed_in ? new_cinema_path() : nil,
             active: Utils.is_page(controller, "cinemas", "new", "create", "show"),
             text: "Cinemas",
             icon: "orange theater masks",
@@ -50,7 +50,7 @@
             url: signed_in ? new_booking_path() : (nil),
             active: Utils.is_page(controller, "bookings", "new", "create", "show"),
             text: "Bookings",
-            icon: "orange tv",
+            icon: "orange clipboard list",
             data: nil
         },
         {

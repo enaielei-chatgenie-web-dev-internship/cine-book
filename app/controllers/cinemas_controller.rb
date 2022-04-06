@@ -2,28 +2,31 @@ class CinemasController < ApplicationController
     before_action() do |controller|
         action = controller.action_name
         signed_in = get_signed_in()
-        unless signed_in && signed_in.admin?
+        unless signed_in
             redirect_to(new_session_url())
         end
     end
 
     def show()
         @cinema = Cinema.find(params[:id])
-        @showings = @cinema.showings.page(params[:page]).per(params[:count] || 10)
+        @bookings = @cinema.bookings.page(params[:page]).per(params[:count] || 5)
+        @showings = @cinema.showings.page(params[:page]).per(params[:count] || 5)
 
         render("cinemas/view_cinema")
     end
 
     def new()
         @cinema = Cinema.new()
-        @cinemas = Cinema.all.page(params[:page]).per(params[:count] || 10)
+        @bookings = @cinema.bookings.page(params[:page]).per(params[:count] || 5)
+        @cinemas = Cinema.all.page(params[:page]).per(params[:count] || 5)
 
         render("cinemas/new_cinema")
     end
 
     def create()
         @cinema = Cinema.new(get_params())
-        @cinemas = Cinema.all.page(params[:page]).per(params[:count] || 10)
+        @bookings = @cinema.bookings.page(params[:page]).per(params[:count] || 5)
+        @cinemas = Cinema.all.page(params[:page]).per(params[:count] || 5)
         
         if @cinema.save()
             Utils.add_messages(

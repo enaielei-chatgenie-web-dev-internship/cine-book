@@ -1,0 +1,24 @@
+<%
+    view ||= false
+    delete ||= false
+
+    controls = []
+
+    controls.append(link_to("View", show_booking_path(booking))) if view
+    controls.append(link_to(
+        "Delete", destroy_booking_path(booking), data: {
+            turbo_method: :delete,
+            turbo_confirm: 'Are you sure you want to delete this booking?'
+    })) if delete
+
+    scontrols = controls.join(" | ")
+%>
+<div class="item">
+    <%= image_tag(booking.showing.movie.image.attached? ? booking.showing.movie.image : get_placeholder(), class: "ui mini circular image entry-image") %>
+    <div class="content">
+        <div class="ui sub header"><%= "#{booking.showing.cinema.name} - #{booking.showing.movie.title} - #{booking.showing.timeslot.pretty_time} - Seat #{booking.seat}" %></div>
+        <% if controls.any?() %>
+            <%= raw(scontrols) %>
+        <% end %>
+    </div>
+</div>

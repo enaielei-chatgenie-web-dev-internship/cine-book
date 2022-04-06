@@ -9,21 +9,21 @@ class TimeslotsController < ApplicationController
 
     def show()
         @timeslot = Timeslot.find(params[:id])
-        @showings = @timeslot.showings.page(params[:page]).per(params[:count] || 10)
+        @showings = @timeslot.showings.page(params[:page]).per(params[:count] || 5)
 
         render("timeslots/view_timeslot")
     end
     
     def new()
         @timeslot = Timeslot.new()
-        @timeslots = Timeslot.all.page(params[:page]).per(params[:count] || 10)
+        @timeslots = Timeslot.all.page(params[:page]).per(params[:count] || 5)
 
         render("timeslots/new_timeslot")
     end
 
     def create()
         @timeslot = Timeslot.new(get_params())
-        @timeslots = Timeslot.all.page(params[:page]).per(params[:count] || 10)
+        @timeslots = Timeslot.all.page(params[:page]).per(params[:count] || 5)
         
         if @timeslot.save()
             Utils.add_messages(

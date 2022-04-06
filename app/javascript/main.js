@@ -34,15 +34,25 @@ $(() => {
     $.fn.api.settings.api = {
         'get data': "/api?type={type}&data={data}",
         'get showing timeslots' : '/api?type={type}&data={data}&cinema_id={cinema_id}&movie_id={movie_id}',
+        'get booking seats' : '/api?type={type}&data={data}&showing_id={showing_id}',
     };
 
     function toggleShowingTimeslot() {
         let cinema = $("#showing-cinema").dropdown("get value");
         let movie = $("#showing-movie").dropdown("get value");
         if(cinema != '' && movie != '') {
-            $(".showing-timeslot").removeClass("disabled");
+            $("#showing-timeslot").removeClass("disabled");
         } else {
-            $(".showing-timeslot").addClass("disabled");
+            $("#showing-timeslot").addClass("disabled");
+        }
+    }
+
+    function toggleBookingSeat() {
+        let showing = $("#booking-showing").dropdown("get value");
+        if(showing != '') {
+            $("#booking-seat").removeClass("disabled");
+        } else {
+            $("#booking-seat").addClass("disabled");
         }
     }
     
@@ -99,7 +109,7 @@ $(() => {
         }
     });
 
-    $(".showing-timeslot").dropdown({
+    $("#showing-timeslot").dropdown({
         apiSettings: {
             action: "get showing timeslots",
             cache: false,
@@ -116,6 +126,47 @@ $(() => {
         saveRemoteData: false,
         message: {
             noResults: "No more timeslots available for this showing."
+        }
+    });
+
+
+    $("#booking-showing").dropdown({
+        apiSettings: {
+            action: "get data",
+            cache: false,
+            beforeSend: function(settings) {
+                settings.urlData = {
+                    type: "dropdown",
+                    data: "booking-showings"
+                }
+                return settings;
+            }
+        },
+        saveRemoteData: false,
+        message: {
+            noResults: "No showing movies yet."
+        },
+        onChange: function(value, text, $choice) {
+            toggleBookingSeat();
+        }
+    });
+
+    $("#booking-seat").dropdown({
+        apiSettings: {
+            action: "get booking seats",
+            cache: false,
+            beforeSend: function(settings) {
+                settings.urlData = {
+                    type: "dropdown",
+                    data: "booking-seats",
+                    showing_id: $("#booking-showing").dropdown("get value"),
+                }
+                return settings;
+            }
+        },
+        saveRemoteData: false,
+        message: {
+            noResults: "No more seats available for this showing."
         }
     });
 

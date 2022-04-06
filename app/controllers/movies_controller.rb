@@ -9,21 +9,21 @@ class MoviesController < ApplicationController
 
     def show()
         @movie = Movie.find(params[:id])
-        @showings = @movie.showings.page(params[:page]).per(params[:count] || 10)
+        @showings = @movie.showings.page(params[:page]).per(params[:count] || 5)
 
         render("movies/view_movie")
     end
 
     def new()
         @movie = Movie.new()
-        @movies = Movie.all.page(params[:page]).per(params[:count] || 10)
+        @movies = Movie.all.page(params[:page]).per(params[:count] || 5)
 
         render("movies/new_movie")
     end
 
     def create()
         @movie = Movie.new(get_params())
-        @movies = Movie.all.page(params[:page]).per(params[:count] || 10)
+        @movies = Movie.all.page(params[:page]).per(params[:count] || 5)
         
         if @movie.save()
             Utils.add_messages(
