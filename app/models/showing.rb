@@ -19,7 +19,7 @@ class Showing < ApplicationRecord
   validates(
     :cinema, uniqueness: {
       scope: [:movie, :timeslot],
-      message: "Showing, and Timeslot are existing already"
+      message: ", Movie, and Timeslot are existing already"
     }
   )
 
