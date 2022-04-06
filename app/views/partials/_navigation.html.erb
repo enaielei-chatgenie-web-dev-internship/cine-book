@@ -12,39 +12,44 @@
             data: nil
         },
         {
-            url: signed_in ? (admin ? root_path() : new_booking_path()) : nil,
-            active: Utils.is_page(controller, "application", "index") || Utils.is_page(
-                controller, "bookings", "new"
-            ),
+            url: signed_in ? root_path() : nil,
+            active: Utils.is_page(controller, "application", "index"),
             text: "Overview",
             icon: "orange eye",
             data: nil
         },
         {
             url: admin ? new_cinema_path() : nil,
-            active: Utils.is_page(controller, "cinemas", "new"),
+            active: Utils.is_page(controller, "cinemas", "new", "create", "show"),
             text: "Cinemas",
             icon: "orange theater masks",
             data: nil
         },
         {
             url: admin ? new_movie_path() : nil,
-            active: Utils.is_page(controller, "movies", "new"),
+            active: Utils.is_page(controller, "movies", "new", "create", "show"),
             text: "Movies",
             icon: "orange film",
             data: nil
         },
         {
             url: admin ? new_timeslot_path() : nil,
-            active: Utils.is_page(controller, "timeslots", "new"),
+            active: Utils.is_page(controller, "timeslots", "new", "create", "show"),
             text: "Timeslots",
             icon: "orange clock",
             data: nil
         },
         {
-            url: signed_in && admin ? new_showing_path() : (signed_in ? show_showings_path() : nil),
-            active: Utils.is_page(controller, "showings", "new", "create", "index", "show"),
+            url: signed_in && admin ? new_showing_path() : (nil),
+            active: Utils.is_page(controller, "showings", "new", "create", "show"),
             text: "Showings",
+            icon: "orange tv",
+            data: nil
+        },
+        {
+            url: signed_in ? new_booking_path() : (nil),
+            active: Utils.is_page(controller, "bookings", "new", "create", "show"),
+            text: "Bookings",
             icon: "orange tv",
             data: nil
         },

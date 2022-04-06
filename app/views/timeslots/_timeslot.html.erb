@@ -1,0 +1,23 @@
+<%
+    view ||= false
+    delete ||= false
+
+    controls = []
+
+    controls.append(link_to("View", show_timeslot_path(timeslot))) if view
+    controls.append(link_to(
+        "Delete", destroy_timeslot_path(timeslot), data: {
+            turbo_method: :delete,
+            turbo_confirm: 'Are you sure you want to delete this timeslot?'
+    })) if delete
+
+    scontrols = controls.join(" | ")
+%>
+<div class="item">
+    <div class="content">
+        <div class="ui sub header"><%= timeslot.pretty_time + (timeslot.label && !timeslot.label.empty? ? " (#{timeslot.label})" : "") %></div>
+        <% if controls.any?() %>
+            <%= raw(scontrols) %>
+        <% end %>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<%
+    pagination = {
+        page: @showings.current_page(),
+        pages: @showings.total_pages(),
+        pages_display: 2,
+        options: {
+            count: params[:count]
+        }
+    }
+%>
+<h2 class="ui center aligned icon header">
+    <%= image_tag(@cinema.image.attached? ? @cinema.image : get_placeholder(), class: "ui circular image profile-image") %>
+    <div class="content">
+        <%= @cinema.name %>
+        <div class="sub header"><%= @cinema.location %></div>
+    </div>
+</h2>
+
+<div class="ui divider"></div>
+
+<div class="ui accordion">
+    <div class="title">
+        <i class="dropdown icon"></i>
+        <h3 class="ui header">
+            <div class="content">
+                <i class="orange icon tv"></i>
+                Showings (<%= @showings.total_count %>)
+                <div class="sub header">The now showing movies of this cinema.</div>
+            </div>
+        </h3>
+    </div>
+    <div class="ui bottom attached segment orange content">
+        <% if @showings.any?() %>
+            <div class="ui divided relaxed middle aligned list">
+                <%= render(@showings) %>
+            </div>
+        <% else %>
+            <span>There's nothing to see here.</span>
+        <% end %>
+        <% if @showings.total_pages > 1 %>
+            <div class="ui center aligned basic fitted segment">
+                <%= render("partials/pagination", pagination) %>
+            </div>
+        <% end %>
+    </div>
+</div>
+
+<%
+    active = params[:active]
+    accordion = [
+        "showings"
+    ]
+    index = accordion.index(active)
+    if index != nil %>
+    <%= javascript_tag("$(\".ui.accordion\").accordion(\"open\", #{index})")%>
+<% end %>

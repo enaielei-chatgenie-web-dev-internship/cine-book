@@ -5,6 +5,8 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string(:full_name)
       t.string(:mobile_number)
 
+      t.index(:email, unique: true)
+
       t.timestamps()
     end
   end

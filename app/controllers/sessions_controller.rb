@@ -2,36 +2,27 @@ class SessionsController < ApplicationController
     before_action() do |controller|
         action = controller.action_name
         if ["new", "create"].include?(action) && get_signed_in()
-            if get_signed_in().admin?()
-                redirect_to(root_url())
-            else 
-                redirect_to(new_booking_url())
-            end
+            redirect_to(root_url())
         end
     end
 
     def new()
+        @session_ = params[:session] || {
+            email: "",
+            password: "",
+            remembered: false
+        }
         user_id = params[:user_id]
         request = params[:request]
         @user = User.find(user_id) if user_id
         if @user && @user.activate(request)
-            @session_ = {
-                email: @user.email,
-                password: "",
-                remembered: false
-            }
+            @session_[:email] = @user.email
             Utils.add_messages(
                 flash.now,
                 "Successful account activation",
                 ["You may now try signing in your account."],
                 "positive",
             )
-        else
-            @session_ = {
-                email: "",
-                password: "",
-                remembered: false
-            }
         end
 
         render("sessions/sign_in")
@@ -47,11 +38,7 @@ class SessionsController < ApplicationController
                     remembered = @session_[:remembered]
                     remembered = remembered && !remembered.empty?() && remembered != "0"
                     sign_in(@user, remembered)
-                    if @user.admin?
-                        return redirect_to(root_url())
-                    else
-                        return redirect_to(new_booking_url())
-                    end
+                    return redirect_to(root_url())
                 else
                     Utils.add_messages(
                         flash.now,

@@ -1,16 +1,26 @@
 <%
+    view ||= false
+    delete ||= false
+
+    controls = []
+
+    controls.append(link_to("View", show_showing_path(showing))) if view
+    controls.append(link_to(
+        "Delete", destroy_showing_path(showing), data: {
+            turbo_method: :delete,
+            turbo_confirm: 'Are you sure you want to delete this showing?'
+    })) if delete
+
+    scontrols = controls.join(" | ")
 %>
-<div class="ui fluid card">
+<div class="item">
+    <%= image_tag(showing.movie.image.attached? ? showing.movie.image : get_placeholder(), class: "ui mini circular image entry-image") %>
     <div class="content">
-      <a class="header" href="<%= show_showing_path(movie.id) %>"><%= movie.title %></a>
-      <div class="description">
-        <%= movie.description %>
-      </div>
-    </div>
-    <div class="extra content">
-      <a href="<%= show_showing_path(movie.id) %>">
-        <i class="check icon"></i>
-        In <%= movie.showings.size %> cinema(s).
-      </a>
+        <% if controls.any?() %>
+            <div class="ui sub header"><%= "#{showing.cinema.name} - #{showing.movie.title} - #{showing.timeslot.pretty_time}" %></div>
+            <%= raw(scontrols) %>
+        <% else %>
+            <div class="header"><a href="<%= show_showing_path(showing) %>"><%= "#{showing.cinema.name} - #{showing.movie.title} - #{showing.timeslot.pretty_time}" %></a></div>
+        <% end %>
     </div>
 </div>

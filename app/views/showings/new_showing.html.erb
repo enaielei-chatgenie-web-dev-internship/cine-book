@@ -1,8 +1,15 @@
-<% provide(:title, "New Showing") %>
+<% provide(:title, "Showings") %>
 <%
-
+    pagination = {
+        page: @showings.current_page(),
+        pages: @showings.total_pages(),
+        pages_display: 2,
+        options: {
+            count: params[:count]
+        }
+    }
 %>
-<%= render("partials/page_header", title: "New Showing", subtitle: "Add a new showing to the database.") %>
+<%= render("partials/page_header", title: "Showings", subtitle: "View your registered showings.") %>
 <div class="ui divider"></div>
 <%= form_with(
     model: @showing,
@@ -12,7 +19,7 @@
 ) do |form| %>
     <div class="field">
         <%= form.label(:cinema_id, "Cinema") %>
-        <div class="ui selection dropdown">
+        <div id="showing-cinema" class="ui selection dropdown">
             <%= form.hidden_field(:cinema_id, placeholder: "Select a Cinema") %>
             <i class="dropdown icon"></i>
             <div class="default text">Cinema</div>
@@ -25,7 +32,7 @@
     </div>
     <div class="field">
         <%= form.label(:movie_id, "Movie") %>
-        <div class="ui selection dropdown">
+        <div id="showing-movie" class="ui selection dropdown">
             <%= form.hidden_field(:movie_id, placeholder: "Select a Movie") %>
             <i class="dropdown icon"></i>
             <div class="default text">Movie</div>
@@ -38,20 +45,33 @@
     </div>
     <div class="field">
         <%= form.label(:timeslot_id, "Timeslot") %>
-        <div class="ui selection dropdown">
+        <div class="ui selection dropdown showing-timeslot disabled">
             <%= form.hidden_field(:timeslot_id, placeholder: "Select a Timeslot") %>
             <i class="dropdown icon"></i>
             <div class="default text">Timeslot</div>
             <div class="menu">
-                <% for timeslot in @timeslots %>
-                    <div class="item" data-value="<%= timeslot.id %>"><%= timeslot.pretty_time %></div>
-                <% end %>
             </div>
         </div>
     </div>
     <div class="ui right aligned fitted basic segment">
-        <%= form.submit("Submit", class: "ui orange button") %>
+        <%= form.submit("Register", class: "ui orange button") %>
     </div>
     <%= render("partials/messages", messages: flash[:messages]) %>
     <div class="ui error message form-error-message"></div>
+<% end %>
+
+<% if @showings.any? %>
+    <div class="ui divider"></div>
+
+    <div class="ui segment">
+        <div class="ui list">
+            <%= render(@showings, view: true, delete: true) %>
+        </div>
+        
+        <% if @showings.total_pages > 1 %>
+            <div class="ui center aligned basic fitted segment">
+                <%= render("partials/pagination", pagination) %>
+            </div>
+        <% end %>
+    </div>
 <% end %>

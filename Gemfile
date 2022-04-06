@@ -86,3 +86,5 @@ gem "rack-livereload", "~> 0.3.17", :group => :development
 # gem "binding_of_caller", "~> 1.0", :group => :development
 
 gem "kaminari", "~> 1.2"
+
+gem "active_storage_validations", "~> 0.9.7"

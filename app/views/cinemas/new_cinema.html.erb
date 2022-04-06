@@ -1,8 +1,15 @@
-<% provide(:title, "New Cinema") %>
+<% provide(:title, "Cinemas") %>
 <%
-
+    pagination = {
+        page: @cinemas.current_page(),
+        pages: @cinemas.total_pages(),
+        pages_display: 2,
+        options: {
+            count: params[:count]
+        }
+    }
 %>
-<%= render("partials/page_header", title: "New Cinema", subtitle: "Add a new cinema to the database.") %>
+<%= render("partials/page_header", title: "Cinemas", subtitle: "View your registered cinemas.") %>
 <div class="ui divider"></div>
 <%= form_with(
     model: @cinema,
@@ -14,26 +21,49 @@
         <%= form.label(:name) %>
         <div class="ui left icon input">
             <%= form.text_field(:name, placeholder: "JDC Cinema", value: nil) %>
+            <i class="tag icon"></i>
         </div>
     </div>
-    <%= form.hidden_field(:seats, value: 10) %>
     <div class="two fields">
         <div class="field">
             <%= form.label(:location) %>
             <div class="ui left icon input">
                 <%= form.text_field(:location, placeholder: "Bacoor City, Cavite", value: nil) %>
+                <i class="marker icon"></i>
             </div>
         </div>
-        <div class="field disabled">
-            <%= label_tag(:seats_display, "Seats") %>
+        <div class="field">
+            <%= label_tag(:seats, "Seats") %>
             <div class="ui left icon input">
-                <%= number_field_tag(nil, 10, id: :seats_display) %>
+                <%= form.number_field(:seats, min: 1) %>
+                <i class="chair icon"></i>
             </div>
         </div>
     </div>
+    <div class="field">
+        <%= form.label(:image) %>
+        <%= form.file_field(:image, class: "image-upload", accept: $VALID_IMAGE_UPLOAD) %>
+    </div>
+    <%= render("partials/image_preview") %>
     <div class="ui right aligned fitted basic segment">
-        <%= form.submit("Submit", class: "ui orange button") %>
+        <%= form.submit("Register", class: "ui orange button") %>
     </div>
     <%= render("partials/messages", messages: flash[:messages]) %>
     <div class="ui error message form-error-message"></div>
+<% end %>
+
+<% if @cinemas.any? %>
+    <div class="ui divider"></div>
+
+    <div class="ui segment">
+        <div class="ui list">
+            <%= render(@cinemas, view: true, delete: true) %>
+        </div>
+        
+        <% if @cinemas.total_pages > 1 %>
+            <div class="ui center aligned basic fitted segment">
+                <%= render("partials/pagination", pagination) %>
+            </div>
+        <% end %>
+    </div>
 <% end %>

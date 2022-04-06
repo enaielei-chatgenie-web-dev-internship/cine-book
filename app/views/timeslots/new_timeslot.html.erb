@@ -1,8 +1,15 @@
-<% provide(:title, "New Timeslot") %>
+<% provide(:title, "Timeslots") %>
 <%
-
+    pagination = {
+        page: @timeslots.current_page(),
+        pages: @timeslots.total_pages(),
+        pages_display: 2,
+        options: {
+            count: params[:count]
+        }
+    }
 %>
-<%= render("partials/page_header", title: "New Timeslot", subtitle: "Add a new timeslot to the database.") %>
+<%= render("partials/page_header", title: "Timeslots", subtitle: "View your registered timeslots.") %>
 <div class="ui divider"></div>
 <%= form_with(
     model: @timeslot,
@@ -15,7 +22,7 @@
         <div class="ui calendar time">
             <div class="ui left icon input">
                 <%= form.text_field(:time, placeholder: "7:00 PM", value: nil) %>
-                <i class="id badge icon"></i>
+                <i class="time icon"></i>
             </div>
         </div>
     </div>
@@ -23,12 +30,28 @@
         <%= form.label(:label) %>
         <div class="ui left icon input">
             <%= form.text_field(:label, placeholder: "Morning", value: nil) %>
-            <i class="id mobile icon"></i>
+            <i class="tag icon"></i>
         </div>
     </div>
     <div class="ui right aligned fitted basic segment">
-        <%= form.submit("Submit", class: "ui orange button") %>
+        <%= form.submit("Register", class: "ui orange button") %>
     </div>
     <%= render("partials/messages", messages: flash[:messages]) %>
     <div class="ui error message form-error-message"></div>
+<% end %>
+
+<% if @timeslots.any? %>
+    <div class="ui divider"></div>
+
+    <div class="ui segment">
+        <div class="ui list">
+            <%= render(@timeslots, view: true, delete: true) %>
+        </div>
+        
+        <% if @timeslots.total_pages > 1 %>
+            <div class="ui center aligned basic fitted segment">
+                <%= render("partials/pagination", pagination) %>
+            </div>
+        <% end %>
+    </div>
 <% end %>

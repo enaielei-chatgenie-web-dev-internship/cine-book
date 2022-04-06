@@ -2,22 +2,18 @@ class UsersController < ApplicationController
     before_action() do |controller|
         action = controller.action_name
         if ["new", "create"].include?(action) && get_signed_in()
-            if get_signed_in().admin?
-                redirect_to(root_url())
-            else
-                redirect_to(new_booking_url())
-            end
+            redirect_to(root_url())
         end
     end
 
     def new()
-        @user = User.new()
+        @user = User.new(email: params[:user] ? params[:user][:email] : nil)
         render("users/sign_up")
     end
 
     def create()
         @user = User.new(get_params())
-        
+
         if @user.save()
             # UserMailer.account_activation(@user).deliver_now()
             # Utils.add_messages(
@@ -33,7 +29,9 @@ class UsersController < ApplicationController
                 "You can try logging in your account now.",
                 "positive"
             )
-            redirect_to(new_user_url())
+            redirect_to(new_session_url(session: {
+                email: @user.email
+            }))
         else
             Utils.add_messages(
                 flash.now,

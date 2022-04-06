@@ -35,3 +35,45 @@ $primary-color: #f2711c;
 footer {
     font-weight: 100 !important;
 }
+
+#image-preview, .image-preview {
+    display: inline-block;
+    width: 7em !important;
+    height: 7em !important;
+    background: black;
+    margin-right: 0.5em;
+
+    img {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+.entry-image {
+    width: 3em !important;
+    height: 3em !important;
+    object-fit: contain;
+}
+
+.ui.accordion > .title > .ui.header {
+    display: inline-block;
+    margin-top: 0;
+}
+
+.list {
+    font-weight: normal;
+    margin-bottom: 0 !important;
+}
+
+.profile-image {
+    width: 3.5em !important;
+    height: 3.5em !important;
+}
+
+.seats {
+    .column {
+        padding: 0.10em !important;
+    }
+}

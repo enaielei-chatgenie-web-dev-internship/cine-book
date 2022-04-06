@@ -1,0 +1,24 @@
+<%
+    view ||= false
+    delete ||= false
+
+    controls = []
+
+    controls.append(link_to("View", show_movie_path(movie))) if view
+    controls.append(link_to(
+        "Delete", destroy_movie_path(movie), data: {
+            turbo_method: :delete,
+            turbo_confirm: 'Are you sure you want to delete this movie?'
+    })) if delete
+
+    scontrols = controls.join(" | ")
+%>
+<div class="item">
+    <%= image_tag(movie.image.attached? ? movie.image : get_placeholder(), class: "ui mini circular image entry-image") %>
+    <div class="content">
+        <div class="ui sub header"><%= movie.title %></div>
+        <% if controls.any?() %>
+            <%= raw(scontrols) %>
+        <% end %>
+    </div>
+</div>

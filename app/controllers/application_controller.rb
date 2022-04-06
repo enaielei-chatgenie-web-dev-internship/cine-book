@@ -6,6 +6,61 @@ class ApplicationController < ActionController::Base
         end
     end
 
+    def api()
+        data = params[:data]
+        type = params[:type]
+        response = {}
+
+        if type == "dropdown"
+            response = {
+                success: true,
+                results: []
+            }
+
+            if data == "cinemas"
+                for c in Cinema.all
+                    response[:results] << {
+                        name: c.name,
+                        value: c.id,
+                    }
+                end
+            elsif data == "movies"
+                for m in Movie.all
+                    response[:results] << {
+                        name: m.title,
+                        value: m.id,
+                    }
+                end
+            elsif data == "showing-timeslots"
+                cinema_id = params[:cinema_id]
+                movie_id = params[:movie_id]
+                cinema = Cinema.find(cinema_id)
+                movie = Movie.find(movie_id)
+                
+                if cinema && movie
+                    timeslots = Showing.timeslots(cinema, movie)
+                    for t in timeslots
+                        response[:results] << {
+                            name: t.pretty_time + (
+                                t.label && !t.label.empty? ?
+                                " (#{t.label})" :
+                                ""
+                            ),
+                            value: t.id
+                        }
+                    end
+                else
+                    response[:success] = false
+                end
+            else
+                response[:success] = false
+            end
+        end
+
+        render(json: response)
+    end
+
+
     def index()
         render("application/index")
     end

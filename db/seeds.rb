@@ -52,12 +52,12 @@ Timeslot.create(
 
 for i in 0..19
     Cinema.create(
-        name: words.shuffle()[..10].join(" "),
+        name: words.shuffle()[..5].join(" "),
         location: words.shuffle()[..30].join(" "),
     )
 
     Movie.create(
-        title: words.shuffle()[..10].join(" "),
+        title: words.shuffle()[..5].join(" "),
         description: words.shuffle()[..30].join(" "),
     )
 

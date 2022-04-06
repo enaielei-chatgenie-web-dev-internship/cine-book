@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   root("application#index")
+  get("/api", to: "application#api", as: :api)
 
   # Sign Up
   get("/auth", to: "users#new")
@@ -20,24 +21,32 @@ Rails.application.routes.draw do
   post("/auth/password-reset", to: "password_resets#create", as: :create_password_reset)
 
   # Cinemas
-  get("/new-cinema", to: "cinemas#new", as: :new_cinema)
-  post("/new-cinema", to: "cinemas#create", as: :create_cinema)
+  get("/cinemas", to: "cinemas#new", as: :new_cinema)
+  post("/cinemas", to: "cinemas#create", as: :create_cinema)
+  get("/cinemas/:id", to: "cinemas#show", as: :show_cinema)
+  delete("/cinemas/:id", to: "cinemas#destroy", as: :destroy_cinema)
 
   # Movies
-  get("/new-movie", to: "movies#new", as: :new_movie)
-  post("/new-movie", to: "movies#create", as: :create_movie)
+  get("/movies", to: "movies#new", as: :new_movie)
+  post("/movies", to: "movies#create", as: :create_movie)
+  get("/movies/:id", to: "movies#show", as: :show_movie)
+  delete("/movies/:id", to: "movies#destroy", as: :destroy_movie)
 
   # Timeslots
-  get("/new-timeslot", to: "timeslots#new", as: :new_timeslot)
-  post("/new-timeslot", to: "timeslots#create", as: :create_timeslot)
+  get("/timeslots", to: "timeslots#new", as: :new_timeslot)
+  post("/timeslots", to: "timeslots#create", as: :create_timeslot)
+  get("/timeslots/:id", to: "timeslots#show", as: :show_timeslot)
+  delete("/timeslots/:id", to: "timeslots#destroy", as: :destroy_timeslot)
 
   # Showings
-  get("/new-showing", to: "showings#new", as: :new_showing)
-  post("/new-showing", to: "showings#create", as: :create_showing)
-  get("/view-showing", to: "showings#index", as: :show_showings)
-  get("/view-showing/:id", to: "showings#show", as: :show_showing)
+  get("/showings", to: "showings#new", as: :new_showing)
+  post("/showings", to: "showings#create", as: :create_showing)
+  get("/showings/:id", to: "showings#show", as: :show_showing)
+  delete("/showing/:id", to: "showings#destroy", as: :destroy_showing)
 
   # Bookings
-  get("/new-booking", to: "bookings#new", as: :new_booking)
-  post("/new-booking", to: "bookings#create", as: :create_booking)
+  get("/bookings", to: "bookings#new", as: :new_booking)
+  post("/bookings", to: "bookings#create", as: :create_booking)
+  get("/bookings/:id", to: "bookings#show", as: :show_booking)
+  delete("/booking/:id", to: "bookings#destroy", as: :destroy_booking)
 end
