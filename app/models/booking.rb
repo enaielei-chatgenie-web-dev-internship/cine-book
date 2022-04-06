@@ -15,4 +15,10 @@ class Booking < ApplicationRecord
       presence: true,
       comparison: {greater_than: 0}
   )
+  validates(
+    :showing, uniqueness: {
+      scope: [:seat],
+      message: "and Seat are existing already"
+    }
+  )
 end

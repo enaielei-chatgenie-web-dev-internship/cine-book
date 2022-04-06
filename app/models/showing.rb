@@ -16,6 +16,12 @@ class Showing < ApplicationRecord
     :timeslot_id,
     presence: true,
   )
+  validates(
+    :cinema, uniqueness: {
+      scope: [:movie, :timeslot],
+      message: "Showing, and Timeslot are existing already"
+    }
+  )
 
   def seats()
     return cinema.seats
