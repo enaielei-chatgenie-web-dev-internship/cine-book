@@ -65,10 +65,10 @@
         <div class="ui right aligned fitted basic segment">
             <%= form.submit("Register", class: "ui orange button") %>
         </div>
-        <%= render("partials/messages", messages: flash[:messages]) %>
         <div class="ui error message form-error-message"></div>
     <% end %>
 <% end %>
+<%= render("partials/messages", messages: flash[:messages]) %>
 
 <% if @showings.any? %>
     <div class="ui divider"></div>

@@ -18,8 +18,8 @@ class Showing < ApplicationRecord
   )
   validates(
     :cinema, uniqueness: {
-      scope: [:movie, :timeslot],
-      message: ", Movie, and Timeslot are existing already"
+      scope: [:timeslot],
+      message: " and Timeslot are existing already"
     }
   )
 
@@ -61,9 +61,5 @@ class Showing < ApplicationRecord
     end
 
     return layout
-  end
-
-  def self.timeslots(cinema, movie)
-    return Timeslot.where.not(id: Showing.select(:timeslot_id).where(cinema_id: cinema.id, movie_id: movie.id).pluck(:timeslot_id))
   end
 end

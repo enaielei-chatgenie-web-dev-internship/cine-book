@@ -33,18 +33,24 @@ $(() => {
 
     $.fn.api.settings.api = {
         'get data': "/api?type={type}&data={data}",
-        'get showing timeslots' : '/api?type={type}&data={data}&cinema_id={cinema_id}&movie_id={movie_id}',
+        'get showing timeslots' : '/api?type={type}&data={data}&cinema_id={cinema_id}',
         'get booking seats' : '/api?type={type}&data={data}&showing_id={showing_id}',
     };
 
     function toggleShowingTimeslot() {
         let cinema = $("#showing-cinema").dropdown("get value");
-        let movie = $("#showing-movie").dropdown("get value");
-        if(cinema != '' && movie != '') {
+        $("#showing-timeslot").dropdown("clear");
+        if(cinema != "") {
             $("#showing-timeslot").removeClass("disabled");
         } else {
             $("#showing-timeslot").addClass("disabled");
         }
+        // let movie = $("#showing-movie").dropdown("get value");
+        // if(cinema != '' && movie != '') {
+        //     $("#showing-timeslot").removeClass("disabled");
+        // } else {
+        //     $("#showing-timeslot").addClass("disabled");
+        // }
     }
 
     function toggleBookingSeat() {
@@ -88,26 +94,30 @@ $(() => {
         }
     });
 
-    $("#showing-movie").dropdown({
-        apiSettings: {
-            action: "get data",
-            cache: false,
-            beforeSend: function(settings) {
-                settings.urlData = {
-                    type: "dropdown",
-                    data: "movies"
-                }
-                return settings;
-            }
-        },
-        saveRemoteData: false,
-        message: {
-            noResults: "No registered movies."
-        },
-        onChange: function(value, text, $choice) {
-            toggleShowingTimeslot();
-        }
-    });
+    let value = $("#showing-cinema").dropdown("get value");
+    $("#showing-cinema").dropdown("clear");
+    $("#showing-cinema").dropdown("set selected", value);
+
+    // $("#showing-movie").dropdown({
+    //     apiSettings: {
+    //         action: "get data",
+    //         cache: false,
+    //         beforeSend: function(settings) {
+    //             settings.urlData = {
+    //                 type: "dropdown",
+    //                 data: "movies"
+    //             }
+    //             return settings;
+    //         }
+    //     },
+    //     saveRemoteData: false,
+    //     message: {
+    //         noResults: "No registered movies."
+    //     },
+    //     onChange: function(value, text, $choice) {
+    //         toggleShowingTimeslot();
+    //     }
+    // });
 
     $("#showing-timeslot").dropdown({
         apiSettings: {
@@ -118,14 +128,14 @@ $(() => {
                     type: "dropdown",
                     data: "showing-timeslots",
                     cinema_id: $("#showing-cinema").dropdown("get value"),
-                    movie_id: $("#showing-movie").dropdown("get value"),
+                    // movie_id: $("#showing-movie").dropdown("get value"),
                 }
                 return settings;
             }
         },
         saveRemoteData: false,
         message: {
-            noResults: "No more timeslots available for this showing."
+            noResults: "No more timeslots available for the selected cinema."
         }
     });
 
@@ -150,6 +160,10 @@ $(() => {
             toggleBookingSeat();
         }
     });
+
+    value = $("#booking-showing").dropdown("get value");
+    $("#booking-showing").dropdown("clear");
+    $("#booking-showing").dropdown("set selected", value);
 
     $("#booking-seat").dropdown({
         apiSettings: {

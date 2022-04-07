@@ -10,6 +10,12 @@
     }
 %>
 <%= render("partials/page_header", title: "Timeslots", subtitle: "View your registered timeslots.") %>
+<div class="ui basic labels">
+    <a class="ui label">
+        Total
+        <div class="detail"><%= @timeslots.total_count %></div>
+    </a>
+</div>
 <div class="ui divider"></div>
 <%= form_with(
     model: @timeslot,
@@ -36,9 +42,9 @@
     <div class="ui right aligned fitted basic segment">
         <%= form.submit("Register", class: "ui orange button") %>
     </div>
-    <%= render("partials/messages", messages: flash[:messages]) %>
     <div class="ui error message form-error-message"></div>
 <% end %>
+<%= render("partials/messages", messages: flash[:messages]) %>
 
 <% if @timeslots.any? %>
     <div class="ui divider"></div>

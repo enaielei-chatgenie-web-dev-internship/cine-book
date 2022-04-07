@@ -40,12 +40,12 @@ class ApplicationController < ActionController::Base
                 end
             elsif data == "showing-timeslots"
                 cinema_id = params[:cinema_id]
-                movie_id = params[:movie_id]
                 cinema = Cinema.find(cinema_id)
-                movie = Movie.find(movie_id)
+                # movie_id = params[:movie_id]
+                # movie = Movie.find(movie_id)
                 
-                if cinema && movie
-                    timeslots = Showing.timeslots(cinema, movie)
+                if cinema
+                    timeslots = cinema.timeslots
                     for t in timeslots
                         response[:results] << {
                             name: t.pretty_time + (

@@ -28,6 +28,10 @@ class Cinema < ApplicationRecord
         }
     )
 
+    def timeslots()
+        return Timeslot.where.not(id: Showing.select(:timeslot_id).where(cinema_id: id).pluck(:timeslot_id))
+    end
+
     def bookings()
         return Booking.joins(:showing).where("showings.cinema_id = ?", id)
     end

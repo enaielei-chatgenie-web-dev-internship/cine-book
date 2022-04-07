@@ -74,14 +74,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_06_054305) do
     t.bigint "timeslot_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cinema_id", "movie_id", "timeslot_id"], name: "index_showings_on_cinema_id_and_movie_id_and_timeslot_id", unique: true
+    t.index ["cinema_id", "timeslot_id"], name: "index_showings_on_cinema_id_and_timeslot_id", unique: true
     t.index ["cinema_id"], name: "index_showings_on_cinema_id"
     t.index ["movie_id"], name: "index_showings_on_movie_id"
     t.index ["timeslot_id"], name: "index_showings_on_timeslot_id"
   end
 
   create_table "timeslots", force: :cascade do |t|
-    t.time "time", default: "2000-01-01 10:23:59"
+    t.time "time", default: "2000-01-01 02:22:50"
     t.string "label"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
