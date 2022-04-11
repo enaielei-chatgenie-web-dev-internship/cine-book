@@ -15,15 +15,16 @@
     controls.append(link_to("Book", new_booking_path(booking: {showing_id: showing.id}))) if book
 
     scontrols = controls.join(" | ")
+    title = "#{showing.cinema.name} - #{showing.movie.title} - #{showing.timeslot.pretty_time}"
 %>
 <div class="item">
     <%= image_tag(showing.movie.image.attached? ? showing.movie.image : get_placeholder(), class: "ui mini circular image entry-image") %>
     <div class="content">
         <% if controls.any?() %>
-            <div class="ui sub header"><%= "#{showing.cinema.name} - #{showing.movie.title} - #{showing.timeslot.pretty_time}" %></div>
+            <div class="header" title="<%= title %>"><%= title.truncate(50) %></div>
             <%= raw(scontrols) %>
         <% else %>
-            <div class="header"><a href="<%= show_showing_path(showing) %>"><%= "#{showing.cinema.name} - #{showing.movie.title} - #{showing.timeslot.pretty_time}" %></a></div>
+            <div class="header" title="<%= title %>"><a href="<%= show_showing_path(showing) %>"><%= title.truncate(50) %></a></div>
         <% end %>
     </div>
 </div>

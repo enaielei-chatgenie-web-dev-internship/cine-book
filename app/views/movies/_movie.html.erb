@@ -16,7 +16,7 @@
 <div class="item">
     <%= image_tag(movie.image.attached? ? movie.image : get_placeholder(), class: "ui mini circular image entry-image") %>
     <div class="content">
-        <div class="ui sub header"><%= movie.title %></div>
+        <div class="header" title="<%= movie.title %>"><%= movie.title.truncate(50) %></div>
         <% if controls.any?() %>
             <%= raw(scontrols) %>
         <% end %>

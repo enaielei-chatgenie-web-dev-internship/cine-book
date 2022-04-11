@@ -12,10 +12,11 @@
     })) if delete
 
     scontrols = controls.join(" | ")
+    title = timeslot.pretty_time + (timeslot.label && !timeslot.label.empty? ? " (#{timeslot.label})" : "")
 %>
 <div class="item">
     <div class="content">
-        <div class="ui sub header"><%= timeslot.pretty_time + (timeslot.label && !timeslot.label.empty? ? " (#{timeslot.label})" : "") %></div>
+        <div class="header" title="<%= title %>"><%= title.truncate(50) %></div>
         <% if controls.any?() %>
             <%= raw(scontrols) %>
         <% end %>

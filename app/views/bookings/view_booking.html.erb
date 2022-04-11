@@ -1,3 +1,4 @@
+<% provide(:title, @booking.showing.cinema.name + " - " + @booking.showing.movie.title + " - " + @booking.showing.timeslot.pretty_time + " - Seat " + @booking.seat.to_s) %>
 <%
     # pagination = {
     #     page: @bookings.current_page(),

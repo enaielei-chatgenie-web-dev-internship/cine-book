@@ -14,9 +14,9 @@
     scontrols = controls.join(" | ")
 %>
 <div class="item">
-    <%= image_tag(cinema.image.attached? ? cinema.image : get_placeholder(), class: "ui mini circular image entry-image") %>
+    <%= image_tag(cinema.image.attached? ? cinema.image : get_placeholder(), class: "ui mini circular image entry-image middle aligned icon") %>
     <div class="content">
-        <div class="ui sub header"><%= cinema.name %></div>
+        <div class="header" title="<%= cinema.name %>"><%= cinema.name.truncate(50) %></div>
         <% if controls.any?() %>
             <%= raw(scontrols) %>
         <% end %>

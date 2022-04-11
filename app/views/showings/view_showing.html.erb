@@ -1,3 +1,4 @@
+<% provide(:title, @showing.cinema.name + " - " + @showing.movie.title + " - " + @showing.timeslot.pretty_time) %>
 <%
     signed_in = controller.get_signed_in()
     admin = signed_in && signed_in.admin?

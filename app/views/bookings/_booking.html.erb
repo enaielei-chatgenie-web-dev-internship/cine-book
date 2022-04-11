@@ -12,11 +12,12 @@
     })) if delete
 
     scontrols = controls.join(" | ")
+    title = "#{booking.showing.cinema.name} - #{booking.showing.movie.title} - #{booking.showing.timeslot.pretty_time} - Seat #{booking.seat}"
 %>
 <div class="item">
     <%= image_tag(booking.showing.movie.image.attached? ? booking.showing.movie.image : get_placeholder(), class: "ui mini circular image entry-image") %>
     <div class="content">
-        <div class="ui sub header"><%= "#{booking.showing.cinema.name} - #{booking.showing.movie.title} - #{booking.showing.timeslot.pretty_time} - Seat #{booking.seat}" %></div>
+        <div class="header" title="<%= title %>"><%= title.truncate(50) %></div>
         <% if controls.any?() %>
             <%= raw(scontrols) %>
         <% end %>

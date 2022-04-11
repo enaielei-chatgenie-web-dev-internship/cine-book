@@ -1,3 +1,4 @@
+<% provide(:title, @cinema.name) %>
 <%
     signed_in = controller.get_signed_in()
     admin = signed_in && signed_in.admin?
