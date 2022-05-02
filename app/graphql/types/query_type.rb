@@ -8,5 +8,7 @@ module Types
     # They will be entry points for queries on your schema.
 
     field(:users, resolver: Resolvers::UsersResolver)
+    field(:cinemas, resolver: Resolvers::CinemasResolver)
+    field(:movies, resolver: Resolvers::MoviesResolver)
   end
 end
