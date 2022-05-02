@@ -34,22 +34,13 @@ module Resolvers
         end
 
         class FilterInputObject < Types::BaseInputObject
-            @@types = ["like", "in"]
-
-            argument(:name, String, required: true)
-            argument(:values, [String], required: true)
-            argument(:type, String, required: false, default_value: @@types.first,
-                prepare: ->(v, c) {
-                    v = v.downcase()
-                    v = @@types.first if !@@types.include?(v)
-                    return v
-                })
-            argument(:not, Boolean, required: false, default_value: false)
+            argument(:condition, String, required: true)
+            argument(:values, [String], required: false, default_value: [])
         end
 
         argument(:page, PageInputObject, required: false)
         argument(:order, [OrderInputObject], required: false)
-        argument(:filter, [FilterInputObject], required: false)
+        argument(:filter, FilterInputObject, required: false)
         
         private()
 
@@ -66,26 +57,30 @@ module Resolvers
 
         def filter(result, filter=nil)
             return result if filter.is_a?(NilClass)
-            values = []
-            conds = filter.map() do |e|
-                neg = e.not ? " not" : ""
-                cond = "lower(#{e.name})" + neg
-                vals = e.values
-                if e.type == "in"
-                    ps = (['?'] * vals.size).join(", ")
-                    cond += " in (#{ps})"
-                elsif e.type == "like"
-                    vals = ["%#{vals.first}%"]
-                    cond += " like ?"
-                end
-                values.append(*vals)
-                cond
-            end
-
             return result.where(
-                conds.join(" or "),
-                *values
+                filter.condition,
+                *filter.values
             )
+        end
+
+        def process(result, filter=nil, order=nil, page=nil)
+            result = self.filter(result, filter)
+            result = self.order(result, order)
+            result = self.paginate(result, page)
+            rv = {result: result}
+    
+            rv["order"] ||= order
+    
+            rv["page"] = {
+                count: result.limit_value,
+                next: result.next_page,
+                number: result.current_page,
+                pages: result.total_pages,
+                previous: result.prev_page,
+                total: result.total_count,
+            } if page
+            
+            return rv
         end
     end
 end
