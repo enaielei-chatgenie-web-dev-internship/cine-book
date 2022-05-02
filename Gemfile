@@ -88,3 +88,6 @@ gem "rack-livereload", "~> 0.3.17", :group => :development
 gem "kaminari", "~> 1.2"
 
 gem "active_storage_validations", "~> 0.9.7"
+
+gem "graphql", "~> 2.0"
+gem "graphiql-rails", group: :development
