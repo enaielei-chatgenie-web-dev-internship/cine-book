@@ -4,5 +4,7 @@ module Mutations
     field_class Types::BaseField
     input_object_class Types::BaseInputObject
     object_class Types::BaseObject
+
+    field(:messages, GraphQL::Types::JSON, null: false)
   end
 end
