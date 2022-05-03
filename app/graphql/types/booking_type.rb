@@ -8,5 +8,8 @@ module Types
     field :seat, Integer
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
+
+    field :user, UserType
+    field :showing, ShowingType
   end
 end

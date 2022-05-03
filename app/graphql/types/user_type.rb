@@ -13,5 +13,7 @@ module Types
     field :activated, Boolean
     field :session_digest, String
     field :admin, Boolean
+
+    field :bookings, [BookingType], null: false
   end
 end

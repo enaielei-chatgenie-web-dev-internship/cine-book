@@ -8,5 +8,9 @@ module Types
     field :seats, Integer
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
+
+    field :timeslots, [TimeslotType], null: false
+    field :showings, [ShowingType], null: false
+    field :bookings, [BookingType], null: false
   end
 end

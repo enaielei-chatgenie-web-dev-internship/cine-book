@@ -10,5 +10,8 @@ module Types
     field(:users, resolver: Resolvers::UsersResolver)
     field(:cinemas, resolver: Resolvers::CinemasResolver)
     field(:movies, resolver: Resolvers::MoviesResolver)
+    field(:timeslots, resolver: Resolvers::TimeslotsResolver)
+    field(:showings, resolver: Resolvers::ShowingsResolver)
+    field(:bookings, resolver: Resolvers::BookingsResolver)
   end
 end
