@@ -196,6 +196,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.3)
+    rack-cors (1.1.1)
+      rack (>= 2.0.0)
     rack-livereload (0.3.17)
       rack
     rack-test (1.1.0)
@@ -293,6 +295,7 @@ DEPENDENCIES
   kaminari (~> 1.2)
   pg (~> 1.1)
   puma (~> 5.0)
+  rack-cors (~> 1.1)
   rack-livereload (~> 0.3.17)
   rails (~> 7.0.2, >= 7.0.2.3)
   selenium-webdriver
