@@ -9,6 +9,6 @@ module Types
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 
     field :pretty_time, String
-    field :showings, [TimeslotType], null: false
+    field :showings, [ShowingType], null: false
   end
 end

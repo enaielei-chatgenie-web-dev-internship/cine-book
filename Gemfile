@@ -91,3 +91,5 @@ gem "active_storage_validations", "~> 0.9.7"
 
 gem "graphql", "~> 2.0"
 gem "graphiql-rails", group: :development
+
+gem "rack-cors", "~> 1.1"
